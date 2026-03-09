@@ -1337,6 +1337,9 @@ allow read, write: if request.auth != null && isAdmin();
                     });
                     // Add this line at the end of the loadAllData() function, before setting dataLoaded = true
                     this.enquiryFilters = { showroom: '', status: '' }; // Initialize filters
+                    // Add this at the end of loadAllData(), before setting dataLoaded = true
+                    this.userRoleFilter = ''; // Initialize user role filter
+                    this.dataLoaded = true;
                     this.dataLoaded = true;
                     console.log('Data loaded:', {
                         users: this.users.length,
@@ -1388,7 +1391,11 @@ allow read, write: if request.auth != null && isAdmin();
             }
 
             calculateTrialDaysRemaining(startDate) {
-                if (!startDate) return 14; // Default 14 days trial
+                if (!startDate) {
+                    // If no start date, assume trial started 0 days ago (new showroom)
+                    return 14; // Default 14 days trial
+                }
+
                 try {
                     let start;
                     if (startDate.toDate) {
@@ -1398,14 +1405,21 @@ allow read, write: if request.auth != null && isAdmin();
                     } else {
                         start = new Date(startDate);
                     }
+
+                    // Check if date is valid
+                    if (isNaN(start.getTime())) {
+                        return 14; // Default if invalid date
+                    }
+
                     const trialEnd = new Date(start);
                     trialEnd.setDate(trialEnd.getDate() + 14); // 14 days trial
                     const now = new Date();
                     const diffTime = trialEnd - now;
                     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                    return diffDays;
+                    return diffDays > 0 ? diffDays : 0;
                 } catch (e) {
-                    return 14;
+                    console.error('Error calculating trial days:', e);
+                    return 14; // Default on error
                 }
             }
 
@@ -1766,34 +1780,42 @@ allow read, write: if request.auth != null && isAdmin();
             async renderSubscriptions() {
                 try {
                     const content = `
-                    <div class="table-container">
-                        <div class="table-header">
-                            <h2>Subscription Management</h2>
-                            <button class="btn btn-sm btn-primary" onclick="app.refreshData()">
-                                <i class="fas fa-sync-alt"></i> Refresh
-                            </button>
-                            <div class="price-tag" style="margin-left: 1rem;">
-                                <strong>Plan: ₹10,999/year</strong> (Annual billing only)
-                            </div>
-                        </div>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Showroom</th>
-                                    <th>Plan Type</th>
-                                    <th>Trial Start</th>
-                                    <th>Subscription Start</th>
-                                    <th>Subscription End</th>
-                                    <th>Days Remaining</th>
-                                    <th>Payment Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${this.showrooms.map(s => {
-                        const trialStartDate = this.formatDate(s.trialStartDate);
-                        const subStartDate = this.formatDate(s.subscriptionStartDate);
-                        const subEndDate = this.formatDate(s.subscriptionEndDate);
+            <div class="table-container">
+                <div class="table-header">
+                    <h2>Subscription Management</h2>
+                    <button class="btn btn-sm btn-primary" onclick="app.refreshData()">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                    <div class="price-tag" style="margin-left: 1rem;">
+                        <strong>Plan: ₹10,999/year</strong> (Annual billing only)
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Showroom</th>
+                            <th>Plan Type</th>
+                            <th>Trial Start</th>
+                            <th>Subscription Start</th>
+                            <th>Subscription End</th>
+                            <th>Days Remaining</th>
+                            <th>Payment Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${this.showrooms.map(s => {
+                        // FIXED: Properly format trial start date
+                        let trialStartDate = 'N/A';
+                        if (s.trialStartDate) {
+                            trialStartDate = this.formatDate(s.trialStartDate);
+                        } else if (s.createdAt) {
+                            // If no trialStartDate, use createdAt as fallback
+                            trialStartDate = this.formatDate(s.createdAt) + ' (estimated)';
+                        }
+
+                        const subStartDate = s.subscriptionStartDate ? this.formatDate(s.subscriptionStartDate) : 'Not started';
+                        const subEndDate = s.subscriptionEndDate ? this.formatDate(s.subscriptionEndDate) : 'Not set';
 
                         let daysRemaining;
                         let daysClass = 'badge-success';
@@ -1809,7 +1831,7 @@ allow read, write: if request.auth != null && isAdmin();
                                 daysText = 'Expired';
                             }
                         } else if (s.planType === 'trial') {
-                            daysRemaining = this.calculateTrialDaysRemaining(s.trialStartDate);
+                            daysRemaining = this.calculateTrialDaysRemaining(s.trialStartDate || s.createdAt);
                             daysText = daysRemaining > 0 ? daysRemaining + ' days left in trial' : 'Trial ended';
                             daysClass = 'badge-trial';
                         }
@@ -1826,41 +1848,41 @@ allow read, write: if request.auth != null && isAdmin();
                         }
 
                         return `
-                                        <tr>
-                                            <td><strong>${this.escapeHtml(s.name || 'N/A')}</strong></td>
-                                            <td><span class="badge ${planBadge}">${planText}</span></td>
-                                            <td>${trialStartDate}</td>
-                                            <td>${subStartDate}</td>
-                                            <td>${subEndDate}</td>
-                                            <td>
-                                                <span class="badge ${daysClass}">${daysText}</span>
-                                            </td>
-                                            <td>
-                                                <span class="badge ${paymentBadge}">${paymentText}</span>
-                                            </td>
-                                            <td>
-                                                <div class="action-buttons">
-                                                    <button class="action-btn btn-primary" onclick="app.editShowroom('${s.id}')">
-                                                        <i class="fas fa-edit"></i> Edit
-                                                    </button>
-                                                    ${s.planType === 'paid' && s.paymentStatus === 'unpaid' ?
+                                <tr>
+                                    <td><strong>${this.escapeHtml(s.name || 'N/A')}</strong></td>
+                                    <td><span class="badge ${planBadge}">${planText}</span></td>
+                                    <td>${trialStartDate}</td>
+                                    <td>${subStartDate}</td>
+                                    <td>${subEndDate}</td>
+                                    <td>
+                                        <span class="badge ${daysClass}">${daysText}</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge ${paymentBadge}">${paymentText}</span>
+                                    </td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="action-btn btn-primary" onclick="app.editShowroom('${s.id}')">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </button>
+                                            ${s.planType === 'paid' && s.paymentStatus === 'unpaid' ?
                                 `<button class="action-btn btn-success" onclick="app.markPaymentPaid('${s.id}')">
-                                                            <i class="fas fa-check"></i> Mark Paid
-                                                        </button>` : ''}
-                                                    ${s.planType === 'trial' ?
+                                                    <i class="fas fa-check"></i> Mark Paid
+                                                </button>` : ''}
+                                            ${s.planType === 'trial' ?
                                 `<button class="action-btn btn-warning" onclick="app.convertToPaid('${s.id}')">
-                                                            <i class="fas fa-exchange-alt"></i> Convert to Paid
-                                                        </button>` : ''}
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    `;
+                                                    <i class="fas fa-exchange-alt"></i> Convert to Paid
+                                                </button>` : ''}
+                                        </div>
+                                    </td>
+                                </tr>
+                            `;
                     }).join('')}
-                                ${this.showrooms.length === 0 ? '<tr><td colspan="8" style="text-align: center;">No showrooms found</td></tr>' : ''}
-                            </tbody>
-                        </table>
-                    </div>
-                `;
+                        ${this.showrooms.length === 0 ? '<tr><td colspan="8" style="text-align: center;">No showrooms found</td></tr>' : ''}
+                    </tbody>
+                </table>
+            </div>
+        `;
 
                     document.getElementById('content-area').innerHTML = content;
                 } catch (error) {
@@ -1871,28 +1893,62 @@ allow read, write: if request.auth != null && isAdmin();
 
             async renderUsers() {
                 try {
-                    // Ensure all required objects exist
-                    this.enquiriesByUser = this.enquiriesByUser || {};
-                    this.showrooms = this.showrooms || [];
+                    // Initialize filter variables
+                    let selectedRole = '';
 
-                    // Debug: Log user data
-                    console.log('=== USERS DEBUG ===');
-                    console.log('Total users:', this.users?.length || 0);
-                    console.log('Users:', (this.users || []).map(u => ({
-                        id: u?.id,
-                        name: u?.name,
-                        role: u?.role,
-                        showroomId: u?.showroomId
-                    })));
+                    // Filter users based on selections
+                    let filteredUsers = this.users || [];
+
+                    // Apply role filter if selected
+                    if (selectedRole) {
+                        filteredUsers = filteredUsers.filter(u => u && u.role === selectedRole);
+                    }
 
                     const content = `
             <div class="table-container">
                 <div class="table-header">
-                    <h2>All Users (${this.users?.length || 0})</h2>
-                    <button class="btn btn-sm btn-primary" onclick="app.refreshData()">
-                        <i class="fas fa-sync-alt"></i> Refresh
-                    </button>
+                    <h2>All Users (${filteredUsers.length})</h2>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <button class="btn btn-sm btn-primary" onclick="app.refreshData()">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
                 </div>
+                
+                <!-- Filter Section -->
+                <div style="background: #f8fafc; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-end;">
+                    <div style="flex: 1; min-width: 200px;">
+                        <label style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; color: var(--dark);">Filter by Role</label>
+                        <select id="user-role-filter" style="width: 100%; padding: 0.5rem; border: 2px solid #e2e8f0; border-radius: 0.5rem; font-size: 0.875rem;" onchange="app.filterUsersByRole()">
+                            <option value="">All Roles</option>
+                            <option value="owner">👑 Owners</option>
+                            <option value="sales">📊 Sales Managers</option>
+                            <option value="admin">🛡️ Admins</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button class="btn btn-sm btn-warning" onclick="app.clearUserFilters()">
+                            <i class="fas fa-times"></i> Clear Filters
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Filter Stats -->
+                <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap;">
+                    <div style="background: #eef2ff; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem;">
+                        <strong>Total:</strong> ${filteredUsers.length} users
+                    </div>
+                    <div style="background: #dbeafe; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem;">
+                        <strong>Owners:</strong> ${filteredUsers.filter(u => u.role === 'owner').length}
+                    </div>
+                    <div style="background: #fed7aa; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem;">
+                        <strong>Sales Managers:</strong> ${filteredUsers.filter(u => u.role === 'sales' || u.role === 'manager' || u.role === 'senior').length}
+                    </div>
+                    <div style="background: #fee2e2; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem;">
+                        <strong>Admins:</strong> ${filteredUsers.filter(u => u.role === 'admin').length}
+                    </div>
+                </div>
+
                 <table>
                     <thead>
                         <tr>
@@ -1907,39 +1963,44 @@ allow read, write: if request.auth != null && isAdmin();
                         </tr>
                     </thead>
                     <tbody>
-                        ${(this.users || []).map(u => {
-                        // Safely get user data with null checks
-                        const userId = u?.id;
-                        const userShowroomId = u?.showroomId;
-
-                        // Find showroom for this user
-                        const showroom = (this.showrooms || []).find(s => s?.id === userShowroomId);
-
-                        // Get enquiries for this user - safe access
-                        const userEnquiries = (this.enquiries || []).filter(e => e && (e.assignedTo === userId || e.salesManagerId === userId)) || [];
+                        ${filteredUsers.map(u => {
+                        const showroom = this.showrooms.find(s => s && s.id === u.showroomId);
+                        const userEnquiries = (this.enquiriesByUser && this.enquiriesByUser[u.id]) ||
+                            (this.enquiries || []).filter(e => e && (e.assignedTo === u.id || e.salesManagerId === u.id));
                         const newEnquiries = userEnquiries.filter(e => e && e.status === 'new').length;
                         const closedEnquiries = userEnquiries.filter(e => e && e.status === 'closed').length;
 
-                        // Debug for this user
-                        if (userEnquiries.length > 0) {
-                            console.log(`User ${u?.name} has ${userEnquiries.length} enquiries:`,
-                                userEnquiries.map(e => ({ customer: e?.customerName, status: e?.status })));
+                        // Determine role badge styling
+                        let roleBadge = 'badge-info';
+                        let roleIcon = '';
+                        if (u.role === 'admin') {
+                            roleBadge = 'badge-danger';
+                            roleIcon = '🛡️ ';
+                        } else if (u.role === 'owner') {
+                            roleBadge = 'badge-warning';
+                            roleIcon = '👑 ';
+                        } else if (u.role === 'senior') {
+                            roleBadge = 'badge-success';
+                            roleIcon = '⭐ ';
+                        } else {
+                            roleBadge = 'badge-info';
+                            roleIcon = '📊 ';
                         }
 
                         return `
                                 <tr>
-                                    <td><strong>${this.escapeHtml(u?.name || 'N/A')}</strong></td>
-                                    <td>${this.escapeHtml(u?.email || 'N/A')}</td>
-                                    <td>${this.escapeHtml(u?.phone || 'N/A')}</td>
+                                    <td><strong>${this.escapeHtml(u.name || 'N/A')}</strong></td>
+                                    <td>${this.escapeHtml(u.email || 'N/A')}</td>
+                                    <td>${this.escapeHtml(u.phone || 'N/A')}</td>
                                     <td>
-                                        <span class="badge ${u?.role === 'admin' ? 'badge-danger' : u?.role === 'owner' ? 'badge-warning' : 'badge-info'}">
-                                            ${this.escapeHtml(u?.role || 'staff')}
+                                        <span class="badge ${roleBadge}">
+                                            ${roleIcon}${this.escapeHtml(u.role === 'senior' ? 'Senior Sales' : (u.role || 'staff'))}
                                         </span>
                                     </td>
                                     <td>${this.escapeHtml(showroom?.name || 'N/A')}</td>
                                     <td>
-                                        <span class="badge ${u?.status === 'active' ? 'badge-success' : 'badge-danger'}">
-                                            ${this.escapeHtml(u?.status || 'active')}
+                                        <span class="badge ${u.status === 'active' ? 'badge-success' : 'badge-danger'}">
+                                            ${this.escapeHtml(u.status || 'active')}
                                         </span>
                                     </td>
                                     <td>
@@ -1951,19 +2012,182 @@ allow read, write: if request.auth != null && isAdmin();
                                     </td>
                                     <td>
                                         <div class="action-buttons">
-                                            <button class="action-btn btn-primary" onclick="app.viewUser('${u?.id}')">
+                                            <button class="action-btn btn-primary" onclick="app.viewUser('${u.id}')">
                                                 <i class="fas fa-eye"></i>
                                             </button>
-                                            <button class="action-btn ${u?.status === 'active' ? 'btn-warning' : 'btn-success'}" 
-                                                    onclick="app.toggleUserStatus('${u?.id}', '${u?.status === 'active' ? 'suspend' : 'activate'}')">
-                                                <i class="fas ${u?.status === 'active' ? 'fa-pause' : 'fa-play'}"></i>
+                                            <button class="action-btn ${u.status === 'active' ? 'btn-warning' : 'btn-success'}" 
+                                                    onclick="app.toggleUserStatus('${u.id}', '${u.status === 'active' ? 'suspend' : 'activate'}')">
+                                                <i class="fas ${u.status === 'active' ? 'fa-pause' : 'fa-play'}"></i>
                                             </button>
                                         </div>
                                     </td>
                                 </tr>
                             `;
                     }).join('')}
-                        ${(this.users || []).length === 0 ? '<tr><td colspan="8" style="text-align: center;">No users found</td></tr>' : ''}
+                        ${filteredUsers.length === 0 ? '<tr><td colspan="8" style="text-align: center; padding: 3rem;">No users found</td></tr>' : ''}
+                    </tbody>
+                </table>
+            </div>
+        `;
+
+                    document.getElementById('content-area').innerHTML = content;
+
+                    // Set the filter dropdown to the current selection
+                    if (this.userRoleFilter) {
+                        document.getElementById('user-role-filter').value = this.userRoleFilter;
+                    }
+
+                } catch (error) {
+                    console.error('Error rendering users:', error);
+                    this.showError('Error rendering users: ' + error.message);
+                }
+            }
+
+            // Add these methods to your ShowroomDeskAdmin class
+
+            async filterUsersByRole() {
+                const roleFilter = document.getElementById('user-role-filter')?.value || '';
+
+                // Store filter state
+                this.userRoleFilter = roleFilter;
+
+                // Filter users based on selected role
+                let filteredUsers = this.users || [];
+
+                if (roleFilter) {
+                    if (roleFilter === 'sales') {
+                        // Include all sales-related roles
+                        filteredUsers = filteredUsers.filter(u => u && (u.role === 'sales' || u.role === 'manager' || u.role === 'senior'));
+                    } else {
+                        filteredUsers = filteredUsers.filter(u => u && u.role === roleFilter);
+                    }
+                }
+
+                // Re-render with filtered users
+                await this.renderFilteredUsers(filteredUsers);
+            }
+
+            async renderFilteredUsers(filteredUsers) {
+                try {
+                    const content = `
+            <div class="table-container">
+                <div class="table-header">
+                    <h2>All Users (${filteredUsers.length})</h2>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <button class="btn btn-sm btn-primary" onclick="app.refreshData()">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Filter Section -->
+                <div style="background: #f8fafc; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-end;">
+                    <div style="flex: 1; min-width: 200px;">
+                        <label style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; color: var(--dark);">Filter by Role</label>
+                        <select id="user-role-filter" style="width: 100%; padding: 0.5rem; border: 2px solid #e2e8f0; border-radius: 0.5rem; font-size: 0.875rem;" onchange="app.filterUsersByRole()">
+                            <option value="">All Roles</option>
+                            <option value="owner" ${this.userRoleFilter === 'owner' ? 'selected' : ''}>👑 Owners</option>
+                            <option value="sales" ${this.userRoleFilter === 'sales' ? 'selected' : ''}>📊 Sales Managers</option>
+                            <option value="admin" ${this.userRoleFilter === 'admin' ? 'selected' : ''}>🛡️ Admins</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button class="btn btn-sm btn-warning" onclick="app.clearUserFilters()">
+                            <i class="fas fa-times"></i> Clear Filters
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Filter Stats -->
+                <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap;">
+                    <div style="background: #eef2ff; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem;">
+                        <strong>Total:</strong> ${filteredUsers.length} users
+                    </div>
+                    <div style="background: #dbeafe; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem;">
+                        <strong>Owners:</strong> ${filteredUsers.filter(u => u.role === 'owner').length}
+                    </div>
+                    <div style="background: #fed7aa; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem;">
+                        <strong>Sales Managers:</strong> ${filteredUsers.filter(u => u.role === 'sales' || u.role === 'manager' || u.role === 'senior').length}
+                    </div>
+                    <div style="background: #fee2e2; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem;">
+                        <strong>Admins:</strong> ${filteredUsers.filter(u => u.role === 'admin').length}
+                    </div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Role</th>
+                            <th>Showroom</th>
+                            <th>Status</th>
+                            <th>Enquiries</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${filteredUsers.map(u => {
+                        const showroom = this.showrooms.find(s => s && s.id === u.showroomId);
+                        const userEnquiries = (this.enquiries || []).filter(e => e && (e.assignedTo === u.id || e.salesManagerId === u.id));
+                        const newEnquiries = userEnquiries.filter(e => e && e.status === 'new').length;
+                        const closedEnquiries = userEnquiries.filter(e => e && e.status === 'closed').length;
+
+                        let roleBadge = 'badge-info';
+                        let roleIcon = '';
+                        if (u.role === 'admin') {
+                            roleBadge = 'badge-danger';
+                            roleIcon = '🛡️ ';
+                        } else if (u.role === 'owner') {
+                            roleBadge = 'badge-warning';
+                            roleIcon = '👑 ';
+                        } else if (u.role === 'senior') {
+                            roleBadge = 'badge-success';
+                            roleIcon = '⭐ ';
+                        } else {
+                            roleBadge = 'badge-info';
+                            roleIcon = '📊 ';
+                        }
+
+                        return `
+                                <tr>
+                                    <td><strong>${this.escapeHtml(u.name || 'N/A')}</strong></td>
+                                    <td>${this.escapeHtml(u.email || 'N/A')}</td>
+                                    <td>${this.escapeHtml(u.phone || 'N/A')}</td>
+                                    <td>
+                                        <span class="badge ${roleBadge}">
+                                            ${roleIcon}${this.escapeHtml(u.role === 'senior' ? 'Senior Sales' : (u.role || 'staff'))}
+                                        </span>
+                                    </td>
+                                    <td>${this.escapeHtml(showroom?.name || 'N/A')}</td>
+                                    <td>
+                                        <span class="badge ${u.status === 'active' ? 'badge-success' : 'badge-danger'}">
+                                            ${this.escapeHtml(u.status || 'active')}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div>Total: ${userEnquiries.length}</div>
+                                        <small>
+                                            <span class="badge badge-warning">New: ${newEnquiries}</span>
+                                            <span class="badge badge-success">Closed: ${closedEnquiries}</span>
+                                        </small>
+                                    </td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="action-btn btn-primary" onclick="app.viewUser('${u.id}')">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="action-btn ${u.status === 'active' ? 'btn-warning' : 'btn-success'}" 
+                                                    onclick="app.toggleUserStatus('${u.id}', '${u.status === 'active' ? 'suspend' : 'activate'}')">
+                                                <i class="fas ${u.status === 'active' ? 'fa-pause' : 'fa-play'}"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            `;
+                    }).join('')}
+                        ${filteredUsers.length === 0 ? '<tr><td colspan="8" style="text-align: center; padding: 3rem;">No users found</td></tr>' : ''}
                     </tbody>
                 </table>
             </div>
@@ -1972,61 +2196,66 @@ allow read, write: if request.auth != null && isAdmin();
                     document.getElementById('content-area').innerHTML = content;
 
                 } catch (error) {
-                    console.error('Error rendering users:', error);
+                    console.error('Error rendering filtered users:', error);
                     this.showError('Error rendering users: ' + error.message);
                 }
             }
 
-           async renderEnquiries() {
-    try {
-        // Initialize filter variables from stored state
-        const currentFilters = this.enquiryFilters || { showroom: '', status: '' };
-        
-        // Filter enquiries based on selections
-        let filteredEnquiries = this.enquiries || [];
-        
-        if (currentFilters.showroom) {
-            filteredEnquiries = filteredEnquiries.filter(e => e && e.showroomId === currentFilters.showroom);
-        }
-        
-        if (currentFilters.status) {
-            filteredEnquiries = filteredEnquiries.filter(e => e && e.status === currentFilters.status);
-        }
-        
-        // Enhance filtered enquiries with details
-        const enquiriesWithDetails = filteredEnquiries.map(e => {
-            const assignedUser = (this.users || []).find(u => u && u.id === e.assignedTo);
-            const showroom = (this.showrooms || []).find(s => s && s.id === e.showroomId);
-            return {
-                ...e,
-                assignedToName: assignedUser?.name || 'Unassigned',
-                assignedToRole: assignedUser?.role || 'N/A',
-                showroomName: showroom?.name || 'N/A'
-            };
-        });
+            async clearUserFilters() {
+                this.userRoleFilter = '';
+                await this.renderUsers();
+            }
 
-        // Create showroom options for filter dropdown
-        const showroomOptions = (this.showrooms || []).map(s => 
-            `<option value="${s.id}" ${currentFilters.showroom === s.id ? 'selected' : ''}>${this.escapeHtml(s.name)}</option>`
-        ).join('');
+            async renderEnquiries() {
+                try {
+                    // Initialize filter variables from stored state
+                    const currentFilters = this.enquiryFilters || { showroom: '', status: '' };
 
-        // Create status options for filter dropdown - INCLUDING "hot" status
-        const statusOptions = [
-            { value: 'new', label: 'New' },
-            { value: 'followup', label: 'Follow-up' },
-            { value: 'hot', label: 'Hot' },
-            { value: 'closed', label: 'Closed' }
-        ].map(status => 
-            `<option value="${status.value}" ${currentFilters.status === status.value ? 'selected' : ''}>${status.label}</option>`
-        ).join('');
+                    // Filter enquiries based on selections
+                    let filteredEnquiries = this.enquiries || [];
 
-        // Count enquiries by status for the current filter
-        const newCount = filteredEnquiries.filter(e => e && e.status === 'new').length;
-        const followupCount = filteredEnquiries.filter(e => e && e.status === 'followup').length;
-        const hotCount = filteredEnquiries.filter(e => e && e.status === 'hot').length;
-        const closedCount = filteredEnquiries.filter(e => e && e.status === 'closed').length;
+                    if (currentFilters.showroom) {
+                        filteredEnquiries = filteredEnquiries.filter(e => e && e.showroomId === currentFilters.showroom);
+                    }
 
-        const content = `
+                    if (currentFilters.status) {
+                        filteredEnquiries = filteredEnquiries.filter(e => e && e.status === currentFilters.status);
+                    }
+
+                    // Enhance filtered enquiries with details
+                    const enquiriesWithDetails = filteredEnquiries.map(e => {
+                        const assignedUser = (this.users || []).find(u => u && u.id === e.assignedTo);
+                        const showroom = (this.showrooms || []).find(s => s && s.id === e.showroomId);
+                        return {
+                            ...e,
+                            assignedToName: assignedUser?.name || 'Unassigned',
+                            assignedToRole: assignedUser?.role || 'N/A',
+                            showroomName: showroom?.name || 'N/A'
+                        };
+                    });
+
+                    // Create showroom options for filter dropdown
+                    const showroomOptions = (this.showrooms || []).map(s =>
+                        `<option value="${s.id}" ${currentFilters.showroom === s.id ? 'selected' : ''}>${this.escapeHtml(s.name)}</option>`
+                    ).join('');
+
+                    // Create status options for filter dropdown - INCLUDING "hot" status
+                    const statusOptions = [
+                        { value: 'new', label: 'New' },
+                        { value: 'followup', label: 'Follow-up' },
+                        { value: 'hot', label: 'Hot' },
+                        { value: 'closed', label: 'Closed' }
+                    ].map(status =>
+                        `<option value="${status.value}" ${currentFilters.status === status.value ? 'selected' : ''}>${status.label}</option>`
+                    ).join('');
+
+                    // Count enquiries by status for the current filter
+                    const newCount = filteredEnquiries.filter(e => e && e.status === 'new').length;
+                    const followupCount = filteredEnquiries.filter(e => e && e.status === 'followup').length;
+                    const hotCount = filteredEnquiries.filter(e => e && e.status === 'hot').length;
+                    const closedCount = filteredEnquiries.filter(e => e && e.status === 'closed').length;
+
+                    const content = `
             <div class="table-container">
                 <div class="table-header">
                     <h2>All Enquiries (${filteredEnquiries.length})</h2>
@@ -2095,15 +2324,15 @@ allow read, write: if request.auth != null && isAdmin();
                         </thead>
                         <tbody>
                             ${enquiriesWithDetails.map(e => {
-                                const createdDate = this.formatDate(e?.createdAt);
-                                
-                                let statusClass = 'badge-info';
-                                let statusText = e?.status || 'new';
-                                if (statusText === 'closed') statusClass = 'badge-success';
-                                if (statusText === 'followup') statusClass = 'badge-warning';
-                                if (statusText === 'hot') statusClass = 'badge-danger'; // Hot status in red
-                                
-                                return `
+                        const createdDate = this.formatDate(e?.createdAt);
+
+                        let statusClass = 'badge-info';
+                        let statusText = e?.status || 'new';
+                        if (statusText === 'closed') statusClass = 'badge-success';
+                        if (statusText === 'followup') statusClass = 'badge-warning';
+                        if (statusText === 'hot') statusClass = 'badge-danger'; // Hot status in red
+
+                        return `
                                     <tr>
                                         <td><strong>${this.escapeHtml(e?.customerName || 'N/A')}</strong></td>
                                         <td>${this.escapeHtml(e?.phone || 'N/A')}</td>
@@ -2117,7 +2346,7 @@ allow read, write: if request.auth != null && isAdmin();
                                         <td><small>${createdDate}</small></td>
                                     </tr>
                                 `;
-                            }).join('')}
+                    }).join('')}
                             ${enquiriesWithDetails.length === 0 ? '<tr><td colspan="7" style="text-align: center; padding: 3rem;">No enquiries found matching the selected filters</td></tr>' : ''}
                         </tbody>
                     </table>
@@ -2125,13 +2354,13 @@ allow read, write: if request.auth != null && isAdmin();
             </div>
         `;
 
-        document.getElementById('content-area').innerHTML = content;
-        
-    } catch (error) {
-        console.error('Error rendering enquiries:', error);
-        this.showError('Error rendering enquiries: ' + error.message);
-    }
-}
+                    document.getElementById('content-area').innerHTML = content;
+
+                } catch (error) {
+                    console.error('Error rendering enquiries:', error);
+                    this.showError('Error rendering enquiries: ' + error.message);
+                }
+            }
 
 
             // Add filter methods to the class
