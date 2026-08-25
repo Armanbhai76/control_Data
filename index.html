@@ -19,6 +19,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
     <style>
+        /* ===== CSS Reset & Variables ===== */
         * {
             margin: 0;
             padding: 0;
@@ -45,7 +46,7 @@
             color: var(--dark);
         }
 
-        /* Login Styles */
+        /* ===== Login Screen ===== */
         #login-screen {
             min-height: 100vh;
             display: flex;
@@ -173,7 +174,7 @@
             color: white;
         }
 
-        /* Dashboard Layout */
+        /* ===== Sidebar & Layout ===== */
         #dashboard {
             display: none;
             min-height: 100vh;
@@ -330,7 +331,7 @@
             padding: 2rem;
         }
 
-        /* Cards */
+        /* ===== Stats Grid ===== */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -376,7 +377,7 @@
             color: var(--gray);
         }
 
-        /* Tables */
+        /* ===== Tables ===== */
         .table-container {
             background: white;
             border-radius: 1rem;
@@ -456,16 +457,6 @@
             color: #6b21a8;
         }
 
-        .badge-paid {
-            background: #d1fae5;
-            color: #065f46;
-        }
-
-        .badge-unpaid {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
         .action-buttons {
             display: flex;
             gap: 0.5rem;
@@ -484,7 +475,7 @@
             gap: 0.25rem;
         }
 
-        /* Modal */
+        /* ===== Modals ===== */
         .modal {
             display: none;
             position: fixed;
@@ -542,7 +533,7 @@
             gap: 1rem;
         }
 
-        /* Charts */
+        /* ===== Charts ===== */
         .charts-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -563,7 +554,7 @@
             font-weight: 600;
         }
 
-        /* Loading */
+        /* ===== Loading & Toast ===== */
         .loading-overlay {
             position: fixed;
             top: 0;
@@ -624,7 +615,19 @@
             }
         }
 
-        /* Responsive */
+        .toast.success {
+            border-left-color: var(--success);
+        }
+
+        .toast.error {
+            border-left-color: var(--danger);
+        }
+
+        .toast.warning {
+            border-left-color: var(--warning);
+        }
+
+        /* ===== Responsive ===== */
         @media (max-width: 1024px) {
             .sidebar {
                 transform: translateX(-100%);
@@ -706,36 +709,475 @@
             margin-bottom: 1rem;
         }
 
-        .permission-box {
-            background: #eef2ff;
-            border: 1px solid #dbeafe;
-            color: #1e40af;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            margin-bottom: 1rem;
+        /* ===== Premium Emerald Theme ===== */
+        :root {
+            --primary: #059669;
+            --primary-dark: #047857;
+            --secondary: #52616f;
+            --success: #10b981;
+            --dark: #17232d;
+            --light: #f1f7f5;
+            --gray: #81909b;
+            --surface: #ffffff;
+            --border: #dce9e4;
+            --shadow: 0 12px 32px rgba(23, 59, 47, 0.07);
         }
 
-        .showroom-stats {
-            display: flex;
-            gap: 1rem;
-            font-size: 0.8rem;
-            color: var(--gray);
+        body {
+            background: #f4f8f7;
+            color: var(--dark);
+            letter-spacing: 0.01em;
         }
 
-        .showroom-stats span {
+        #login-screen {
+            background: radial-gradient(circle at 15% 10%, rgba(16, 185, 129, 0.28), transparent 32%),
+                linear-gradient(135deg, #063d32 0%, #087f5b 52%, #0f766e 100%);
+        }
+
+        .login-card {
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 18px;
+            box-shadow: 0 30px 70px rgba(2, 44, 34, 0.28);
+        }
+
+        .login-header .logo,
+        .login-header .main-site {
+            color: var(--primary);
+        }
+
+        .login-header .main-site {
+            background: #e8f7f1;
+        }
+
+        .form-group input,
+        .form-control {
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: #fbfdfc;
+            color: var(--dark);
+            transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-control:focus {
+            border-color: var(--primary);
+            background: var(--surface);
+            box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.12);
+        }
+
+        .btn {
+            border-radius: 9px;
+            box-shadow: 0 2px 4px rgba(23, 59, 47, 0.08);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #059669, #047857);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #047857, #065f46);
+            box-shadow: 0 12px 24px rgba(5, 150, 105, 0.24);
+        }
+
+        .sidebar {
+            background: linear-gradient(180deg, #063d32 0%, #075744 100%);
+            box-shadow: 8px 0 28px rgba(4, 61, 50, 0.14);
+        }
+
+        .sidebar-header {
+            padding: 1.6rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+        }
+
+        .sidebar-header .logo {
+            color: #ecfdf5;
+            letter-spacing: -0.02em;
+        }
+
+        .sidebar-header .logo i {
+            color: #6ee7b7;
+        }
+
+        .sidebar-header .badge {
+            background: #a7f3d0;
+            color: #065f46;
+        }
+
+        .nav-menu {
+            padding: 1.35rem 0.8rem;
+        }
+
+        .nav-item {
+            margin: 0.2rem 0;
+            padding: 0.8rem 1rem;
+            border-left: 3px solid transparent;
+            border-radius: 8px;
+            color: #b9d7cc;
+        }
+
+        .nav-item:hover {
+            background: rgba(167, 243, 208, 0.1);
+            color: #ecfdf5;
+        }
+
+        .nav-item.active {
+            background: #10a777;
+            color: #ffffff;
+            border-left-color: #a7f3d0;
+            box-shadow: 0 8px 18px rgba(2, 44, 34, 0.2);
+        }
+
+        .nav-item i {
+            color: #6ee7b7;
+        }
+
+        .nav-item.active i {
+            color: #ffffff;
+        }
+
+        .top-bar {
+            background: rgba(255, 255, 255, 0.94);
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 4px 18px rgba(23, 59, 47, 0.05);
+        }
+
+        .page-title {
+            color: #183b31;
+            letter-spacing: -0.02em;
+        }
+
+        .site-link {
+            background: #edf8f4;
+            color: var(--secondary);
+            border: 1px solid #d5eee4;
+        }
+
+        .site-link a {
+            color: var(--primary);
+        }
+
+        .content-area {
+            background: linear-gradient(180deg, #f4f8f7 0%, #f8fbfa 100%);
+        }
+
+        .stat-card,
+        .table-container,
+        .chart-card {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            right: -28px;
+            bottom: -34px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(16, 185, 129, 0.07);
+        }
+
+        .stat-icon {
+            border-radius: 12px;
+        }
+
+        .table-container,
+        .chart-card {
+            background: rgba(255, 255, 255, 0.96);
+        }
+
+        .table-header h2,
+        .chart-card h3,
+        .modal-header h3 {
+            color: #183b31;
+            letter-spacing: -0.015em;
+        }
+
+        th {
+            background: #eef8f4;
+            color: #527066;
+            border-bottom: 1px solid #d6ebe3;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.72rem;
+        }
+
+        td {
+            border-bottom-color: #e7f0ed;
+        }
+
+        tr:hover td {
+            background: #f5fbf8;
+        }
+
+        .badge-success {
+            background: #d9f7e9;
+            color: #087f5b;
+        }
+
+        .badge-info {
+            background: #dff4f1;
+            color: #0f766e;
+        }
+
+        .modal {
+            background: rgba(4, 44, 35, 0.62);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            box-shadow: 0 28px 70px rgba(2, 44, 34, 0.24);
+        }
+
+        .close-btn:hover {
+            color: var(--primary);
+        }
+
+        .spinner {
+            border-color: #d9eee7;
+            border-top-color: var(--primary);
+        }
+
+        .toast {
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--primary);
+            border-radius: 9px;
+        }
+
+        @media (max-width: 768px) {
+            #dashboard {
+                padding-top: 122px;
+            }
+
+            .sidebar {
+                top: 0;
+                right: 0;
+                bottom: auto;
+                width: 100%;
+                height: 122px;
+                transform: none;
+                overflow: hidden;
+            }
+
+            .sidebar-header {
+                height: 58px;
+                padding: 0.8rem 1rem;
+                display: flex;
+                align-items: center;
+            }
+
+            .sidebar-header .logo {
+                font-size: 1.05rem;
+            }
+
+            .sidebar-header .logo i {
+                font-size: 1.35rem;
+            }
+
+            .nav-menu {
+                height: 64px;
+                padding: 0.55rem 0.75rem;
+                display: flex;
+                align-items: center;
+                gap: 0.35rem;
+                overflow-x: auto;
+                overflow-y: hidden;
+                scrollbar-width: thin;
+                scrollbar-color: rgba(167, 243, 208, 0.55) transparent;
+            }
+
+            .nav-menu::-webkit-scrollbar {
+                height: 4px;
+            }
+
+            .nav-menu::-webkit-scrollbar-thumb {
+                background: rgba(167, 243, 208, 0.55);
+                border-radius: 999px;
+            }
+
+            .nav-item {
+                flex: 0 0 auto;
+                margin: 0;
+                padding: 0.65rem 0.85rem;
+                white-space: nowrap;
+            }
+
+            .top-bar {
+                align-items: stretch;
+            }
+
+            .page-title {
+                text-align: center;
+            }
+
+            .user-menu {
+                justify-content: space-between;
+            }
+        }
+
+        /* ===== Showrooms Page ===== */
+        .showrooms-page {
+            padding: 1.75rem;
+        }
+
+        .showrooms-page .table-header {
+            padding-bottom: 1.25rem;
+            margin-bottom: 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .showrooms-page .table-header h2 {
             display: flex;
             align-items: center;
-            gap: 0.25rem;
+            gap: 0.65rem;
         }
 
-        .days-remaining {
-            font-size: 0.7rem;
-            font-weight: 600;
+        .showrooms-page .table-header h2::before {
+            content: '\f54e';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: var(--primary);
+            font-size: 1rem;
         }
 
-        .price-tag {
-            font-size: 0.7rem;
+        .showrooms-table {
+            min-width: 1120px;
+        }
+
+        .showrooms-table th {
+            padding-top: 0.85rem;
+            padding-bottom: 0.85rem;
+        }
+
+        .showrooms-table td {
+            padding-top: 1.1rem;
+            padding-bottom: 1.1rem;
+            vertical-align: middle;
+        }
+
+        .showrooms-table td:first-child {
+            min-width: 170px;
+            color: #183b31;
+        }
+
+        .showrooms-table td:nth-child(3) {
+            min-width: 145px;
+        }
+
+        .showrooms-table td:nth-child(4) {
+            min-width: 180px;
+            line-height: 1.65;
+        }
+
+        .showrooms-table td:nth-child(5),
+        .showrooms-table td:nth-child(6),
+        .showrooms-table td:nth-child(7) {
+            text-align: center;
+            font-weight: 700;
+            color: #31584b;
+        }
+
+        .showrooms-table td small {
             color: var(--gray);
+        }
+
+        .showrooms-table .badge {
+            white-space: nowrap;
+        }
+
+        .showrooms-table .action-buttons {
+            min-width: 150px;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .showrooms-table .action-btn {
+            min-width: 34px;
+            min-height: 32px;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(23, 59, 47, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .showrooms-page {
+                padding: 1rem;
+            }
+
+            .showrooms-page .table-header {
+                align-items: flex-start;
+                gap: 0.85rem;
+            }
+
+            .showrooms-page .table-header h2 {
+                font-size: 1.05rem;
+            }
+
+            .showrooms-table {
+                min-width: 1120px;
+            }
+        }
+
+        /* ===== Analytics Page ===== */
+        .analytics-page .charts-grid {
+            margin-top: 1.5rem;
+            align-items: stretch;
+        }
+
+        .analytics-page .chart-card {
+            min-width: 0;
+            height: 330px;
+            padding: 1.35rem;
+            overflow: hidden;
+        }
+
+        .analytics-page .chart-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            padding-bottom: 0.85rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .analytics-page .chart-card h3::before {
+            content: '\f201';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+
+        .analytics-chart-frame {
+            position: relative;
+            flex: 1;
+            min-height: 0;
+            height: 245px;
+        }
+
+        .analytics-chart-frame canvas {
+            display: block;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        @media (max-width: 768px) {
+            .analytics-page .chart-card {
+                height: 285px;
+                padding: 1rem;
+            }
+
+            .analytics-chart-frame {
+                height: 205px;
+            }
         }
     </style>
 </head>
@@ -799,9 +1241,9 @@
                     <i class="fas fa-phone-alt"></i>
                     <span>Enquiries</span>
                 </div>
-                <div class="nav-item" data-page="inventory">
-                    <i class="fas fa-boxes"></i>
-                    <span>Inventory</span>
+                <div class="nav-item" data-page="showroom-metrics">
+                    <i class="fas fa-chart-column"></i>
+                    <span>Showroom Metrics</span>
                 </div>
                 <div class="nav-item" data-page="subscriptions">
                     <i class="fas fa-credit-card"></i>
@@ -844,7 +1286,7 @@
             </div>
 
             <div class="content-area" id="content-area">
-                <!-- Dynamic content will be loaded here -->
+                <!-- Dynamic content -->
             </div>
         </div>
     </div>
@@ -853,7 +1295,7 @@
     <div class="modal" id="edit-showroom-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Edit Showroom Details</h3>
+                <h3>Edit Showroom</h3>
                 <button class="close-btn" onclick="app.closeModal('edit-showroom-modal')">&times;</button>
             </div>
             <div class="modal-body">
@@ -880,9 +1322,9 @@
                         <input type="text" id="edit-showroom-phone" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label>Subscription Type</label>
+                        <label>Plan Type</label>
                         <select id="edit-showroom-plan" class="form-control">
-                            <option value="trial">Trial (14 days free)</option>
+                            <option value="trial">Trial</option>
                             <option value="paid">Paid - ₹10,999/year</option>
                         </select>
                     </div>
@@ -893,18 +1335,17 @@
                     <div class="form-group">
                         <label>Subscription End Date (if paid)</label>
                         <input type="date" id="edit-showroom-end-date" class="form-control">
-                        <small class="price-tag">Leave blank for trial accounts</small>
                     </div>
                     <div class="form-group">
                         <label>Payment Status</label>
                         <select id="edit-showroom-payment" class="form-control">
-                            <option value="paid">Paid - ₹10,999 received</option>
+                            <option value="paid">Paid</option>
                             <option value="unpaid">Unpaid</option>
-                            <option value="trial">Trial (no payment yet)</option>
+                            <option value="trial">Trial</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Showroom Status</label>
+                        <label>Status</label>
                         <select id="edit-showroom-status" class="form-control">
                             <option value="active">Active</option>
                             <option value="suspended">Suspended</option>
@@ -926,48 +1367,31 @@
                 <h3>Showroom Details</h3>
                 <button class="close-btn" onclick="app.closeModal('view-showroom-modal')">&times;</button>
             </div>
-            <div class="modal-body" id="showroom-details-content">
-                <!-- Dynamic content -->
-            </div>
+            <div class="modal-body" id="showroom-details-content"></div>
             <div class="modal-footer">
                 <button class="btn btn-sm btn-primary" onclick="app.closeModal('view-showroom-modal')">Close</button>
             </div>
         </div>
     </div>
 
-    <!-- View User Details Modal -->
+    <!-- View User Modal -->
     <div class="modal" id="view-user-modal">
         <div class="modal-content">
             <div class="modal-header">
                 <h3>User Details</h3>
                 <button class="close-btn" onclick="app.closeModal('view-user-modal')">&times;</button>
             </div>
-            <div class="modal-body" id="user-details-content">
-                <!-- Dynamic content -->
-            </div>
+            <div class="modal-body" id="user-details-content"></div>
             <div class="modal-footer">
                 <button class="btn btn-sm btn-primary" onclick="app.closeModal('view-user-modal')">Close</button>
             </div>
         </div>
     </div>
 
-    <!-- Inventory Item Modal -->
-    <div class="modal" id="inventory-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Inventory Item Details</h3>
-                <button class="close-btn" onclick="app.closeModal('inventory-modal')">&times;</button>
-            </div>
-            <div class="modal-body" id="inventory-details-content">
-                <!-- Dynamic content -->
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-sm btn-primary" onclick="app.closeModal('inventory-modal')">Close</button>
-            </div>
-        </div>
-    </div>
-
     <script>
+        // ============================================================
+        //  SHOWROOMDESK ADMIN PANEL - FULL SOURCE
+        // ============================================================
         class ShowroomDeskAdmin {
             constructor() {
                 this.db = null;
@@ -976,17 +1400,17 @@
                 this.userData = null;
                 this.currentPage = 'dashboard';
                 this.users = [];
+                this.showrooms = [];
                 this.enquiries = [];
                 this.inventory = [];
-                this.showrooms = []; // Derived from users
                 this.charts = {};
                 this.dataLoaded = false;
+                this.userRoleFilter = '';
+                this.enquiryFilters = { showroom: '', status: '' };
 
                 // Initialize Firebase
                 this.initFirebase();
             }
-
-
 
             initFirebase() {
                 try {
@@ -1000,128 +1424,61 @@
                         measurementId: "G-Z8QG7RET37"
                     };
 
-                    // Initialize Firebase
                     firebase.initializeApp(firebaseConfig);
-
-                    // Initialize Auth and Firestore
                     this.auth = firebase.auth();
                     this.db = firebase.firestore();
 
-                    // Set up auth state listener
+                    // Enable persistence
+                    this.db.enablePersistence().catch(err => console.log('Persistence error:', err));
+
                     this.auth.onAuthStateChanged((user) => this.handleAuthChange(user));
 
-                    // Login form handler
                     document.getElementById('login-form').addEventListener('submit', (e) => {
                         e.preventDefault();
                         this.login();
                     });
 
-                    // Navigation handlers
                     document.querySelectorAll('.nav-item').forEach(item => {
                         item.addEventListener('click', (e) => {
                             const page = e.currentTarget.dataset.page;
-                            if (page) {
-                                this.navigateTo(page);
-                            }
+                            if (page) this.navigateTo(page);
                         });
                     });
 
-                    // Logout from nav
-                    document.getElementById('logout-nav').addEventListener('click', () => {
-                        this.logout();
-                    });
+                    document.getElementById('logout-nav').addEventListener('click', () => this.logout());
 
-                    // Mobile menu toggle
                     document.getElementById('menu-toggle').addEventListener('click', () => {
                         document.getElementById('sidebar').classList.toggle('active');
                     });
                 } catch (error) {
-                    console.error('Firebase initialization error:', error);
-                    this.showError('Failed to initialize Firebase. Check console for details.');
+                    console.error('Firebase init error:', error);
+                    this.showError('Failed to initialize Firebase.');
                 }
             }
 
-            showError(message) {
-                const contentArea = document.getElementById('content-area');
-                if (contentArea) {
-                    contentArea.innerHTML = `
-                    <div class="error-box">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <h3>Error</h3>
-                        <p>${message}</p>
-                    </div>
-                `;
-                }
-            }
-
-            showPermissionInfo() {
-                const contentArea = document.getElementById('content-area');
-                if (contentArea) {
-                    contentArea.innerHTML = `
-                    <div class="permission-box">
-                        <i class="fas fa-shield-alt"></i>
-                        <h3>Admin Access Required</h3>
-                        <p>Your Firebase security rules need to be updated to allow admin access.</p>
-                        <p>Please add the following to your Firestore rules:</p>
-                        <pre style="background: #1e293b; color: #fff; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem;">
-function isAdmin() {
-  return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
-}
-
-// Add to users collection:
-allow read: if request.auth != null && (request.auth.uid == userId || isAdmin());
-
-// Add to enquiries collection:
-allow read, write: if request.auth != null && isAdmin();
-
-// Add to inventory collection:
-allow read, write: if request.auth != null && isAdmin();
-                        </pre>
-                    </div>
-                `;
-                }
-            }
-
+            // ===== Authentication =====
             async handleAuthChange(user) {
                 if (user) {
                     try {
-                        // Get current user data
                         const userDoc = await this.db.collection('users').doc(user.uid).get();
-
-                        if (userDoc.exists) {
+                        if (userDoc.exists && userDoc.data().role === 'admin' && userDoc.data().status === 'active') {
+                            this.user = user;
                             this.userData = userDoc.data();
-
-                            // Check if user is admin
-                            if (this.userData.role === 'admin' && this.userData.status === 'active') {
-                                this.user = user;
-                                document.getElementById('admin-name').textContent = this.userData.name || user.email || 'Admin';
-                                document.getElementById('login-screen').style.display = 'none';
-                                document.getElementById('dashboard').style.display = 'block';
-
-                                // Try to load data
-                                try {
-                                    await this.loadAllData();
-                                    this.loadPage('dashboard');
-                                } catch (permissionError) {
-                                    console.error('Permission error:', permissionError);
-                                    this.showPermissionInfo();
-                                    this.toast('⚠️ Admin permissions needed in Firestore rules', 'warning');
-                                }
-                            } else {
-                                await this.auth.signOut();
-                                this.showLogin();
-                                this.toast('❌ Unauthorized: Only active admins can access this panel', 'error');
-                            }
+                            document.getElementById('admin-name').textContent = this.userData.name || user.email;
+                            document.getElementById('login-screen').style.display = 'none';
+                            document.getElementById('dashboard').style.display = 'block';
+                            await this.loadAllData();
+                            this.loadPage('dashboard');
                         } else {
                             await this.auth.signOut();
                             this.showLogin();
-                            this.toast('❌ User not found in database', 'error');
+                            this.toast('❌ Unauthorized access', 'error');
                         }
                     } catch (error) {
-                        console.error('Error checking admin status:', error);
+                        console.error('Auth error:', error);
                         await this.auth.signOut();
                         this.showLogin();
-                        this.toast('Error verifying access: ' + error.message, 'error');
+                        this.toast('Error verifying access', 'error');
                     }
                 } else {
                     this.showLogin();
@@ -1145,15 +1502,12 @@ allow read, write: if request.auth != null && isAdmin();
             async login() {
                 const email = document.getElementById('email').value.trim();
                 const password = document.getElementById('password').value;
-
                 if (!email || !password) {
-                    this.toast('Please enter email and password', 'error');
+                    this.toast('Enter email and password', 'error');
                     return;
                 }
-
                 this.showLoading();
                 document.getElementById('login-btn').disabled = true;
-
                 try {
                     await this.auth.signInWithEmailAndPassword(email, password);
                 } catch (error) {
@@ -1168,186 +1522,147 @@ allow read, write: if request.auth != null && isAdmin();
             }
 
             navigateTo(page) {
-                // Update active nav item
                 document.querySelectorAll('.nav-item').forEach(item => {
                     item.classList.remove('active');
-                    if (item.dataset.page === page) {
-                        item.classList.add('active');
-                    }
+                    if (item.dataset.page === page) item.classList.add('active');
                 });
-
-                let pageTitle = page.charAt(0).toUpperCase() + page.slice(1);
-                document.getElementById('current-page').textContent = pageTitle;
-
+                document.getElementById('current-page').textContent = page.charAt(0).toUpperCase() + page.slice(1);
                 this.currentPage = page;
                 this.loadPage(page);
             }
 
             async loadPage(page) {
                 this.showLoading();
-
                 try {
-                    // Try to load data if not loaded
-                    if (!this.dataLoaded) {
-                        await this.loadAllData();
-                    }
-
+                    if (!this.dataLoaded) await this.loadAllData();
                     switch (page) {
-                        case 'dashboard':
-                            await this.renderDashboard();
-                            break;
-                        case 'showrooms':
-                            await this.renderShowrooms();
-                            break;
-                        case 'users':
-                            await this.renderUsers();
-                            break;
-                        case 'enquiries':
-                            await this.renderEnquiries();
-                            break;
-                        case 'inventory':
-                            await this.renderInventory();
-                            break;
-                        case 'subscriptions':
-                            await this.renderSubscriptions();
-                            break;
-                        case 'analytics':
-                            await this.renderAnalytics();
-                            break;
-                        default:
-                            await this.renderDashboard();
+                        case 'dashboard': await this.renderDashboard(); break;
+                        case 'showrooms': await this.renderShowrooms(); break;
+                        case 'users': await this.renderUsers(); break;
+                        case 'enquiries': await this.renderEnquiries(); break;
+                        case 'showroom-metrics': await this.renderShowroomMetrics(); break;
+                        case 'subscriptions': await this.renderSubscriptions(); break;
+                        case 'analytics': await this.renderAnalytics(); break;
+                        default: await this.renderDashboard();
                     }
                 } catch (error) {
                     console.error('Error loading page:', error);
-                    if (error.code === 'permission-denied') {
-                        this.showPermissionInfo();
-                    } else {
-                        this.showError('Error loading page content: ' + error.message);
-                    }
-                    this.toast('Error loading page content', 'error');
+                    this.showError('Error loading page: ' + error.message);
                 }
-
                 this.hideLoading();
             }
 
+            showError(message) {
+                document.getElementById('content-area').innerHTML = `
+                    <div class="error-box">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Error</h3>
+                        <p>${message}</p>
+                    </div>
+                `;
+            }
+
+            // ===== Data Loading =====
             async loadAllData() {
                 try {
-                    // Load all users
-                    const usersSnapshot = await this.db.collection('users').get();
-                    this.users = usersSnapshot.docs.map(doc => {
-                        const data = doc.data();
+                    // Load users
+                    const usersSnap = await this.db.collection('users').get();
+                    this.users = usersSnap.docs.map(doc => {
+                        const d = doc.data();
+                        return {
+                            id: doc.id,
+                            name: d.name || 'Unknown',
+                            email: d.email || '',
+                            phone: d.phone || '',
+                            role: d.role || 'staff',
+                            status: d.status || 'active',
+                            showroomId: this.getShowroomId(d),
+                            showroomName: d.showroom?.name || d.showroomName || null,
+                            showroomCity: d.showroom?.city || d.showroomCity || null,
+                            planType: d.planType || d.subscription?.planType || 'trial',
+                            paymentStatus: d.paymentStatus || d.subscription?.paymentStatus || 'unpaid',
+                            trialStartDate: d.trialStartDate || d.subscription?.trialStartDate || null,
+                            subscriptionStartDate: d.subscriptionStartDate || d.subscription?.startDate || null,
+                            subscriptionEndDate: d.subscriptionEndDate || d.subscription?.endDate || null,
+                            createdAt: d.createdAt || null,
+                            subscription: d.subscription || {}
+                        };
+                    });
 
-                        // Extract showroom ID - from owner.jpg, it's in showroom.id
-                        let showroomId = null;
-                        if (data.showroom && data.showroom.id) {
-                            showroomId = data.showroom.id;
+                    // Load enquiries
+                    const enquiriesSnap = await this.db.collection('enquiries').get();
+                    this.enquiries = enquiriesSnap.docs.map(doc => {
+                        const d = doc.data();
+                        return {
+                            id: doc.id,
+                            customerName: d.customerName || 'Unknown',
+                            phone: d.phone || '',
+                            vehicleModel: d.vehicleModel || '',
+                            assignedTo: d.assignedTo || d.salesManagerId || null,
+                            status: d.status || 'new',
+                            createdAt: d.createdAt || null,
+                            showroomId: this.getShowroomId(d)
+                        };
+                    });
+
+                    // Load inventory
+                    const invSnap = await this.db.collection('inventory').get();
+                    this.inventory = invSnap.docs.map(doc => {
+                        const d = doc.data();
+                        return { id: doc.id, ...d };
+                    });
+
+                    // Derive showrooms from owners
+                    const owners = this.users.filter(u => u.role === 'owner');
+                    this.showrooms = owners.map(owner => ({
+                        id: owner.showroomId || owner.id,
+                        name: owner.showroomName || owner.name + "'s Showroom",
+                        city: owner.showroomCity || 'N/A',
+                        ownerId: owner.id,
+                        ownerName: owner.name,
+                        ownerEmail: owner.email,
+                        ownerPhone: owner.phone,
+                        planType: owner.planType || 'trial',
+                        paymentStatus: owner.paymentStatus || 'unpaid',
+                        trialStartDate: owner.trialStartDate || null,
+                        subscriptionStartDate: owner.subscriptionStartDate || null,
+                        subscriptionEndDate: owner.subscriptionEndDate || null,
+                        status: owner.status || 'active',
+                        createdAt: owner.createdAt || null,
+                        subscription: owner.subscription || {}
+                    }));
+
+                    // Group users by showroom
+                    this.usersByShowroom = {};
+                    this.users.forEach(u => {
+                        const showroomKey = this.normalizeShowroomId(u.showroomId);
+                        if (showroomKey) {
+                            if (!this.usersByShowroom[showroomKey]) this.usersByShowroom[showroomKey] = [];
+                            this.usersByShowroom[showroomKey].push(u);
                         }
-
-                        return {
-                            id: doc.id,
-                            name: data.name || 'Unknown',
-                            email: data.email || '',
-                            phone: data.phone || '',
-                            role: data.role || 'staff',
-                            status: data.status || 'active',
-                            showroomId: showroomId,
-                            showroomName: data.showroom?.name || data.name + "'s Showroom",
-                            showroomCity: data.showroom?.city || 'N/A',
-                            planType: data.planType || 'trial',
-                            trialStartDate: data.trialStartDate || null,
-                            subscriptionStartDate: data.subscriptionStartDate || null,
-                            subscriptionEndDate: data.subscriptionEndDate || null,
-                            paymentStatus: data.paymentStatus || 'trial',
-                            createdAt: data.createdAt || null
-                        };
                     });
 
-                    // Load all enquiries
-                    const enquiriesSnapshot = await this.db.collection('enquiries').get();
-                    this.enquiries = enquiriesSnapshot.docs.map(doc => {
-                        const data = doc.data();
-
-                        return {
-                            id: doc.id,
-                            customerName: data.customerName || data.customername || 'Unknown',
-                            phone: data.phone || '',
-                            vehicleModel: data.vehicleModel || '',
-                            assignedTo: data.assignedTo || data.salesManagerId || null,
-                            status: data.status || 'new',
-                            createdAt: data.createdAt || null,
-                            showroomId: data.showroomId || null
-                        };
-                    });
-
-                    // Load all inventory
-                    const inventorySnapshot = await this.db.collection('inventory').get();
-                    this.inventory = inventorySnapshot.docs.map(doc => {
-                        const data = doc.data();
-
-                        let showroomId = null;
-                        if (data.showroom && data.showroom.id) {
-                            showroomId = data.showroom.id;
-                        } else if (data.showroomId) {
-                            showroomId = data.showroomId;
+                    // Group enquiries by showroom
+                    this.enquiriesByShowroom = {};
+                    this.enquiries.forEach(e => {
+                        const showroomKey = this.normalizeShowroomId(e.showroomId);
+                        if (showroomKey) {
+                            if (!this.enquiriesByShowroom[showroomKey]) this.enquiriesByShowroom[showroomKey] = [];
+                            this.enquiriesByShowroom[showroomKey].push(e);
                         }
-
-                        return {
-                            id: doc.id,
-                            name: data.name || 'Unknown',
-                            category: data.category || '',
-                            price: data.price || 0,
-                            quantity: data.quantity || 0,
-                            showroomId: showroomId,
-                            createdAt: data.createdAt || null
-                        };
                     });
 
-                    // Create showrooms array from owners
-                    this.showrooms = this.users
-                        .filter(u => u.role === 'owner')
-                        .map(owner => ({
-                            id: owner.showroomId,
-                            name: owner.showroomName || owner.name + "'s Showroom",
-                            city: owner.showroomCity || 'N/A',
-                            ownerId: owner.id,
-                            ownerName: owner.name,
-                            ownerEmail: owner.email,
-                            ownerPhone: owner.phone,
-                            planType: owner.planType || 'trial',
-                            trialStartDate: owner.trialStartDate || null,
-                            subscriptionStartDate: owner.subscriptionStartDate || null,
-                            subscriptionEndDate: owner.subscriptionEndDate || null,
-                            paymentStatus: owner.paymentStatus || 'trial',
-                            status: owner.status || 'active',
-                            createdAt: owner.createdAt || null
-                        }))
-                        .filter(s => s.id); // Remove any showrooms without ID
-
-                    // Debug: Log all showroom IDs
-                    console.log('=== SHOWROOM IDS ===');
-                    this.showrooms.forEach(s => {
-                        console.log(`Showroom: "${s.name}" has ID: "${s.id}"`);
+                    // Group enquiries by user
+                    this.enquiriesByUser = {};
+                    this.enquiries.forEach(e => {
+                        if (e.assignedTo) {
+                            if (!this.enquiriesByUser[e.assignedTo]) this.enquiriesByUser[e.assignedTo] = [];
+                            this.enquiriesByUser[e.assignedTo].push(e);
+                        }
                     });
 
-                    // Debug: Log all closed enquiries with their showroomId
-                    const closedEnquiries = this.enquiries.filter(e => e.status === 'closed');
-                    console.log('=== CLOSED ENQUIRIES ===');
-                    closedEnquiries.forEach(e => {
-                        console.log(`Closed enquiry for ${e.customerName} has showroomId: "${e.showroomId}"`);
-                    });
-                    // Add this line at the end of the loadAllData() function, before setting dataLoaded = true
-                    this.enquiryFilters = { showroom: '', status: '' }; // Initialize filters
-                    // Add this at the end of loadAllData(), before setting dataLoaded = true
-                    this.userRoleFilter = ''; // Initialize user role filter
                     this.dataLoaded = true;
-                    this.dataLoaded = true;
-                    console.log('Data loaded:', {
-                        users: this.users.length,
-                        showrooms: this.showrooms.length,
-                        enquiries: this.enquiries.length,
-                        inventory: this.inventory.length
-                    });
-
+                    console.log('Data loaded:', { users: this.users.length, showrooms: this.showrooms.length, enquiries: this.enquiries.length });
                 } catch (error) {
                     console.error('Error loading data:', error);
                     this.dataLoaded = false;
@@ -1355,72 +1670,52 @@ allow read, write: if request.auth != null && isAdmin();
                 }
             }
 
+            // ===== Utility =====
+            getShowroomId(data) {
+                const showroom = data.showroomId || data.showroomID || data.showroom?.showroomId || data.showroom?.id || null;
+                if (showroom && typeof showroom === 'object') {
+                    return showroom.id || showroom.showroomId || showroom.showroomID || null;
+                }
+                return showroom;
+            }
+
+            normalizeShowroomId(showroomId) {
+                return showroomId === null || showroomId === undefined ? '' : String(showroomId).trim().toLowerCase();
+            }
+
             formatDate(timestamp) {
                 if (!timestamp) return 'N/A';
                 try {
-                    if (timestamp.toDate) {
-                        return timestamp.toDate().toLocaleDateString();
-                    }
-                    if (timestamp.seconds) {
-                        return new Date(timestamp.seconds * 1000).toLocaleDateString();
-                    }
+                    if (timestamp.toDate) return timestamp.toDate().toLocaleDateString();
+                    if (timestamp.seconds) return new Date(timestamp.seconds * 1000).toLocaleDateString();
                     return new Date(timestamp).toLocaleDateString();
-                } catch (e) {
-                    return 'Invalid Date';
-                }
+                } catch { return 'Invalid Date'; }
             }
 
             calculateDaysRemaining(endDate) {
                 if (!endDate) return null;
                 try {
                     let end;
-                    if (endDate.toDate) {
-                        end = endDate.toDate();
-                    } else if (endDate.seconds) {
-                        end = new Date(endDate.seconds * 1000);
-                    } else {
-                        end = new Date(endDate);
-                    }
-                    const now = new Date();
-                    const diffTime = end - now;
-                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                    return diffDays;
-                } catch (e) {
-                    return null;
-                }
+                    if (endDate.toDate) end = endDate.toDate();
+                    else if (endDate.seconds) end = new Date(endDate.seconds * 1000);
+                    else end = new Date(endDate);
+                    const diff = Math.ceil((end - new Date()) / (1000 * 60 * 60 * 24));
+                    return diff;
+                } catch { return null; }
             }
 
             calculateTrialDaysRemaining(startDate) {
-                if (!startDate) {
-                    // If no start date, assume trial started 0 days ago (new showroom)
-                    return 14; // Default 14 days trial
-                }
-
+                if (!startDate) return 14;
                 try {
                     let start;
-                    if (startDate.toDate) {
-                        start = startDate.toDate();
-                    } else if (startDate.seconds) {
-                        start = new Date(startDate.seconds * 1000);
-                    } else {
-                        start = new Date(startDate);
-                    }
-
-                    // Check if date is valid
-                    if (isNaN(start.getTime())) {
-                        return 14; // Default if invalid date
-                    }
-
+                    if (startDate.toDate) start = startDate.toDate();
+                    else if (startDate.seconds) start = new Date(startDate.seconds * 1000);
+                    else start = new Date(startDate);
                     const trialEnd = new Date(start);
-                    trialEnd.setDate(trialEnd.getDate() + 14); // 14 days trial
-                    const now = new Date();
-                    const diffTime = trialEnd - now;
-                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                    return diffDays > 0 ? diffDays : 0;
-                } catch (e) {
-                    console.error('Error calculating trial days:', e);
-                    return 14; // Default on error
-                }
+                    trialEnd.setDate(trialEnd.getDate() + 14);
+                    const diff = Math.ceil((trialEnd - new Date()) / (1000 * 60 * 60 * 24));
+                    return diff > 0 ? diff : 0;
+                } catch { return 14; }
             }
 
             escapeHtml(text) {
@@ -1430,1792 +1725,797 @@ allow read, write: if request.auth != null && isAdmin();
                 return div.innerHTML;
             }
 
+            // ===== Render Functions =====
+            // ---- Dashboard ----
             async renderDashboard() {
-                try {
-                    // Calculate stats directly from arrays
-                    const totalShowrooms = this.showrooms?.length || 0;
-                    const activeShowrooms = this.showrooms?.filter(s => s?.status === 'active').length || 0;
-                    const trialShowrooms = this.showrooms?.filter(s => s?.planType === 'trial').length || 0;
-                    const paidShowrooms = this.showrooms?.filter(s => s?.planType === 'paid').length || 0;
+                const totalShowrooms = this.showrooms.length;
+                const activeShowrooms = this.showrooms.filter(s => s.status === 'active').length;
+                const trialShowrooms = this.showrooms.filter(s => s.planType === 'trial').length;
+                const paidShowrooms = this.showrooms.filter(s => s.planType === 'paid').length;
+                const totalUsers = this.users.length;
+                const totalEnquiries = this.enquiries.length;
+                const closedEnquiries = this.enquiries.filter(e => e.status === 'closed').length;
 
-                    const totalUsers = this.users?.length || 0;
-                    const totalEnquiries = this.enquiries?.length || 0;
-                    const closedEnquiries = this.enquiries?.filter(e => e?.status === 'closed').length || 0;
-
-                    // Log for debugging
-                    console.log('=== DASHBOARD STATS ===');
-                    console.log('Total enquiries:', totalEnquiries);
-                    console.log('Closed enquiries:', closedEnquiries);
-                    console.log('Showrooms:', this.showrooms.map(s => ({ name: s.name, id: s.id })));
-
-                    const content = `
-            <div class="warning-banner">
-                <i class="fas fa-shield-alt"></i>
-                <div>
-                    <strong>Super Admin Dashboard</strong> - Overview of all showrooms and activities
-                </div>
-            </div>
-
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: #eef2ff; color: var(--primary);">
-                        <i class="fas fa-store"></i>
+                const html = `
+                    <div class="warning-banner">
+                        <i class="fas fa-shield-alt"></i>
+                        <div><strong>Super Admin Dashboard</strong> - Full control over all showrooms</div>
                     </div>
-                    <div class="stat-content">
-                        <h3>Total Showrooms</h3>
-                        <div class="value">${totalShowrooms}</div>
-                        <div class="sub">${activeShowrooms} active</div>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:#eef2ff;color:var(--primary);"><i class="fas fa-store"></i></div>
+                            <div class="stat-content">
+                                <h3>Total Showrooms</h3>
+                                <div class="value">${totalShowrooms}</div>
+                                <div class="sub">${activeShowrooms} active</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:#fef3c7;color:var(--warning);"><i class="fas fa-chart-pie"></i></div>
+                            <div class="stat-content">
+                                <h3>Subscription Status</h3>
+                                <div class="value">${trialShowrooms} Trial</div>
+                                <div class="sub">${paidShowrooms} Paid</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:#d1fae5;color:var(--success);"><i class="fas fa-phone-alt"></i></div>
+                            <div class="stat-content">
+                                <h3>Total Enquiries</h3>
+                                <div class="value">${totalEnquiries}</div>
+                                <div class="sub">${closedEnquiries} closed</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:#fee2e2;color:var(--danger);"><i class="fas fa-users"></i></div>
+                            <div class="stat-content">
+                                <h3>Total Users</h3>
+                                <div class="value">${totalUsers}</div>
+                                <div class="sub">Across all showrooms</div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: #fef3c7; color: var(--warning);">
-                        <i class="fas fa-chart-pie"></i>
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h2>Recent Showrooms</h2>
+                            <button class="btn btn-sm btn-primary" onclick="app.navigateTo('showrooms')">View All</button>
+                        </div>
+                        <table>
+                            <thead><tr><th>Showroom</th><th>Owner</th><th>Plan</th><th>Status</th></tr></thead>
+                            <tbody>
+                                ${this.showrooms.slice(0, 5).map(s => `
+                                    <tr>
+                                        <td><strong>${this.escapeHtml(s.name)}</strong></td>
+                                        <td>${this.escapeHtml(s.ownerName)}</td>
+                                        <td><span class="badge ${s.planType === 'paid' ? 'badge-success' : 'badge-trial'}">${s.planType}</span></td>
+                                        <td><span class="badge ${s.status === 'active' ? 'badge-success' : 'badge-danger'}">${s.status}</span></td>
+                                    </tr>
+                                `).join('')}
+                                ${this.showrooms.length === 0 ? '<tr><td colspan="4" style="text-align:center;">No showrooms</td></tr>' : ''}
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="stat-content">
-                        <h3>Subscription Status</h3>
-                        <div class="value">${trialShowrooms} Trial</div>
-                        <div class="sub">${paidShowrooms} Paid (₹10,999/year)</div>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: #d1fae5; color: var(--success);">
-                        <i class="fas fa-phone-alt"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3>Total Enquiries</h3>
-                        <div class="value">${totalEnquiries}</div>
-                        <div class="sub">${closedEnquiries} closed deals</div>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: #fee2e2; color: var(--danger);">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3>Closed Deals</h3>
-                        <div class="value">${closedEnquiries}</div>
-                        <div class="sub">Across all showrooms</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="table-container">
-                <div class="table-header">
-                    <h2>Showrooms Overview</h2>
-                    <button class="btn btn-sm btn-primary" onclick="app.navigateTo('showrooms')">
-                        View All Showrooms <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Showroom</th>
-                            <th>City</th>
-                            <th>Owner</th>
-                            <th>Users</th>
-                            <th>Enquiries</th>
-                            <th>Closed Deals</th>
-                            <th>Plan</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${this.showrooms.slice(0, 5).map(s => {
-                        // Count users for this showroom
-                        const users = this.users?.filter(u => u.showroomId === s.id) || [];
-
-                        // Count enquiries for this showroom - DIRECT FILTERING
-                        const showroomEnquiries = this.enquiries?.filter(e => e.showroomId === s.id) || [];
-
-                        // Count closed deals for this showroom - DIRECT STATUS CHECK
-                        const closedCount = showroomEnquiries.filter(e => e.status === 'closed').length;
-
-                        // Debug for this showroom
-                        console.log(`Showroom "${s.name}" (ID: ${s.id}):`, {
-                            enquiries: showroomEnquiries.length,
-                            closed: closedCount,
-                            enquiryDetails: showroomEnquiries.map(e => ({
-                                customer: e.customerName,
-                                status: e.status
-                            }))
-                        });
-
-                        return `
-                                <tr>
-                                    <td><strong>${this.escapeHtml(s.name || 'N/A')}</strong></td>
-                                    <td>${this.escapeHtml(s.city || 'N/A')}</td>
-                                    <td>${this.escapeHtml(s.ownerName || 'N/A')}</td>
-                                    <td>${users.length}</td>
-                                    <td>${showroomEnquiries.length}</td>
-                                    <td><strong style="color: ${closedCount > 0 ? '#10b981' : 'inherit'};">${closedCount}</strong></td>
-                                    <td>
-                                        <span class="badge ${s.planType === 'paid' ? 'badge-success' : 'badge-trial'}">
-                                            ${s.planType === 'paid' ? 'Paid' : 'Trial'}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span class="badge ${s.status === 'active' ? 'badge-success' : 'badge-danger'}">
-                                            ${s.status || 'active'}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <button class="action-btn btn-info" onclick="app.viewShowroom('${s.id}')">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button class="action-btn btn-primary" onclick="app.editShowroom('${s.id}')">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            `;
-                    }).join('')}
-                        ${this.showrooms.length === 0 ? '<tr><td colspan="9" style="text-align: center;">No showrooms found</td></tr>' : ''}
-                    </tbody>
-                </table>
-            </div>
-        `;
-
-                    document.getElementById('content-area').innerHTML = content;
-
-                    // Final verification
-                    console.log('=== FINAL VERIFICATION ===');
-                    const totalClosed = this.enquiries?.filter(e => e.status === 'closed').length || 0;
-                    console.log(`Total closed deals across all showrooms: ${totalClosed}`);
-
-                    this.showrooms.forEach(s => {
-                        const closedForShowroom = this.enquiries?.filter(e => e.showroomId === s.id && e.status === 'closed').length || 0;
-                        console.log(`${s.name}: ${closedForShowroom} closed deals`);
-                    });
-
-                } catch (error) {
-                    console.error('Error rendering dashboard:', error);
-                    this.showError('Error rendering dashboard: ' + error.message);
-                }
+                `;
+                document.getElementById('content-area').innerHTML = html;
             }
 
+            // ---- Showrooms ----
             async renderShowrooms() {
-                try {
-                    // Ensure all required objects exist
-                    this.usersByShowroom = this.usersByShowroom || {};
-                    this.enquiriesByShowroom = this.enquiriesByShowroom || {};
-                    this.inventoryByShowroom = this.inventoryByShowroom || {};
+                const html = `
+                    <div class="table-container showrooms-page">
+                        <div class="table-header">
+                            <h2>All Showrooms (${this.showrooms.length})</h2>
+                            <button class="btn btn-sm btn-primary" onclick="app.refreshData()"><i class="fas fa-sync-alt"></i> Refresh</button>
+                        </div>
+                        <table class="showrooms-table">
+                            <thead>
+                                <tr>
+                                    <th>Showroom</th><th>City</th><th>Owner</th><th>Contact</th>
+                                    <th>Users</th><th>Enquiries</th><th>Closed</th><th>Plan</th><th>Payment</th><th>Status</th><th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${this.showrooms.map(s => {
+                    const showroomKey = this.normalizeShowroomId(s.id);
+                    const users = (this.usersByShowroom[showroomKey] || []).length;
+                    const enquiries = (this.enquiriesByShowroom[showroomKey] || []).length;
+                    const closed = (this.enquiriesByShowroom[showroomKey] || []).filter(e => e.status === 'closed').length;
+                    const planType = s.planType || 'trial';
+                    const paymentStatus = s.paymentStatus || 'unpaid';
+                    const daysRemaining = planType === 'paid' ? this.calculateDaysRemaining(s.subscriptionEndDate) : this.calculateTrialDaysRemaining(s.trialStartDate);
+                    const isPaid = planType === 'paid';
+                    const isPaidStatus = paymentStatus === 'paid';
+                    const trialStartDate = s.trialStartDate ? this.formatDate(s.trialStartDate) : 'N/A';
+                    const subStart = s.subscriptionStartDate ? this.formatDate(s.subscriptionStartDate) : 'Not started';
+                    const subEnd = s.subscriptionEndDate ? this.formatDate(s.subscriptionEndDate) : 'Not set';
 
-                    // Debug: Log all showroom IDs and closed enquiries
-                    console.log('=== SHOWROOMS DEBUG ===');
-                    console.log('Showrooms:', this.showrooms.map(s => ({ id: s.id, name: s.name })));
+                    let planBadge = isPaid ? 'badge-success' : 'badge-trial';
+                    let planText = isPaid ? 'Paid - ₹10,999/yr' : 'Trial (14 days)';
+                    let paymentBadge = isPaid ? (isPaidStatus ? 'badge-success' : 'badge-danger') : 'badge-trial';
+                    let paymentText = isPaid ? (isPaidStatus ? 'Paid' : 'Unpaid') : 'Trial';
 
-                    const closedEnquiries = this.enquiries?.filter(e => e?.status === 'closed') || [];
-                    console.log('Closed enquiries:', closedEnquiries.map(e => ({
-                        customer: e.customerName,
-                        showroomId: e.showroomId,
-                        status: e.status
-                    })));
-
-                    const content = `
-            <div class="table-container">
-                <div class="table-header">
-                    <h2>All Showrooms (${this.showrooms?.length || 0})</h2>
-                    <button class="btn btn-sm btn-primary" onclick="app.refreshData()">
-                        <i class="fas fa-sync-alt"></i> Refresh
-                    </button>
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Showroom Name</th>
-                            <th>City</th>
-                            <th>Owner</th>
-                            <th>Contact</th>
-                            <th>Users</th>
-                            <th>Enquiries</th>
-                            <th>Closed Deals</th>
-                            <th>Inventory</th>
-                            <th>Plan</th>
-                            <th>Payment</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${(this.showrooms || []).map(s => {
-                        // Safely get showroom ID
-                        const showroomId = s?.id;
-
-                        // Count users for this showroom - direct filtering with null checks
-                        const users = (this.users || []).filter(u => u && u.showroomId === showroomId) || [];
-
-                        // Count enquiries for this showroom - direct filtering
-                        const showroomEnquiries = (this.enquiries || []).filter(e => e && e.showroomId === showroomId) || [];
-
-                        // Count closed deals - direct status check
-                        const closedCount = showroomEnquiries.filter(e => e && e.status === 'closed').length;
-
-                        // Get inventory for this showroom
-                        const inventory = (this.inventory || []).filter(i => i && i.showroomId === showroomId) || [];
-
-                        // Debug for this showroom
-                        console.log(`Showroom "${s?.name}" (ID: ${showroomId}):`, {
-                            users: users.length,
-                            enquiries: showroomEnquiries.length,
-                            closed: closedCount,
-                            enquiryDetails: showroomEnquiries.map(e => ({
-                                customer: e?.customerName,
-                                status: e?.status
-                            }))
-                        });
-
-                        // Calculate days remaining
-                        let daysRemaining;
-                        let daysClass = 'badge-success';
-                        let planBadge = 'badge-trial';
-                        let planText = 'Trial (14 days)';
-                        let paymentBadge = 'badge-trial';
-                        let paymentText = 'Trial';
-
-                        const trialStartDate = s?.trialStartDate ? this.formatDate(s.trialStartDate) : 'N/A';
-                        const subStartDate = s?.planType === 'paid' ?
-                            (s?.subscriptionStartDate ? this.formatDate(s.subscriptionStartDate) : 'Not set') :
-                            'Not started';
-                        const subEndDate = s?.planType === 'paid' ?
-                            (s?.subscriptionEndDate ? this.formatDate(s.subscriptionEndDate) : 'Not set') :
-                            'Not set';
-
-                        if (s?.planType === 'paid') {
-                            planBadge = 'badge-success';
-                            planText = 'Paid - ₹10,999/yr';
-                            daysRemaining = this.calculateDaysRemaining(s?.subscriptionEndDate);
-
-                            if (s?.paymentStatus === 'paid') {
-                                paymentBadge = 'badge-success';
-                                paymentText = 'Paid';
-                            } else {
-                                paymentBadge = 'badge-danger';
-                                paymentText = 'Unpaid';
-                            }
-                        } else {
-                            daysRemaining = this.calculateTrialDaysRemaining(s?.trialStartDate);
-                            paymentBadge = 'badge-trial';
-                            paymentText = 'Trial';
-                        }
-
+                    let daysClass = 'badge-success';
+                    if (daysRemaining !== null) {
                         if (daysRemaining < 30) daysClass = 'badge-warning';
                         if (daysRemaining < 7) daysClass = 'badge-danger';
                         if (daysRemaining <= 0) daysClass = 'badge-danger';
+                    }
 
-                        return `
-                                <tr>
-                                    <td><strong>${this.escapeHtml(s?.name || 'N/A')}</strong></td>
-                                    <td>${this.escapeHtml(s?.city || 'N/A')}</td>
-                                    <td>${this.escapeHtml(s?.ownerName || 'N/A')}</td>
-                                    <td>
-                                        ${this.escapeHtml(s?.ownerEmail || 'N/A')}<br>
-                                        <small>${this.escapeHtml(s?.ownerPhone || 'N/A')}</small>
-                                    </td>
-                                    <td><strong>${users.length}</strong></td>
-                                    <td><strong>${showroomEnquiries.length}</strong></td>
-                                    <td><strong style="color: ${closedCount > 0 ? '#10b981' : 'inherit'};">${closedCount}</strong></td>
-                                    <td>${inventory.length}</td>
-                                    <td>
-                                        <span class="badge ${planBadge}">${planText}</span>
-                                        ${daysRemaining !== null ?
-                                `<br><small class="badge ${daysClass}">${daysRemaining} days left</small>` : ''}
-                                        ${s?.planType === 'trial' ?
-                                `<br><small>Trial: ${trialStartDate}</small>` :
-                                `<br><small>From: ${subStartDate}<br>To: ${subEndDate}</small>`}
-                                    </td>
-                                    <td>
-                                        <span class="badge ${paymentBadge}">${paymentText}</span>
-                                    </td>
-                                    <td>
-                                        <span class="badge ${s?.status === 'active' ? 'badge-success' : 'badge-danger'}">
-                                            ${s?.status || 'active'}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <div class="action-buttons">
-                                            <button class="action-btn btn-info" onclick="app.viewShowroom('${s?.id}')">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button class="action-btn btn-primary" onclick="app.editShowroom('${s?.id}')">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button class="action-btn ${s?.status === 'active' ? 'btn-warning' : 'btn-success'}" 
-                                                    onclick="app.toggleShowroomStatus('${s?.id}', '${s?.status === 'active' ? 'suspend' : 'activate'}')">
-                                                <i class="fas ${s?.status === 'active' ? 'fa-pause' : 'fa-play'}"></i>
-                                            </button>
-                                            ${s?.planType === 'paid' && s?.paymentStatus === 'unpaid' ?
-                                `<button class="action-btn btn-success" onclick="app.markPaymentPaid('${s?.id}')">
-                                                    <i class="fas fa-check"></i> Mark Paid
-                                                </button>` : ''}
-                                        </div>
-                                    </td>
-                                </tr>
-                            `;
-                    }).join('')}
-                        ${(this.showrooms || []).length === 0 ? '<tr><td colspan="12" style="text-align: center;">No showrooms found</td></tr>' : ''}
-                    </tbody>
-                </table>
-            </div>
-        `;
-
-                    document.getElementById('content-area').innerHTML = content;
-
-                    // Final verification
-                    console.log('=== FINAL VERIFICATION ===');
-                    const totalClosed = (this.enquiries || []).filter(e => e?.status === 'closed').length || 0;
-                    console.log(`Total closed deals across all showrooms: ${totalClosed}`);
-
-                    (this.showrooms || []).forEach(s => {
-                        const closedForShowroom = (this.enquiries || []).filter(e => e?.showroomId === s?.id && e?.status === 'closed').length || 0;
-                        console.log(`${s?.name}: ${closedForShowroom} closed deals`);
-                    });
-
-                } catch (error) {
-                    console.error('Error rendering showrooms:', error);
-                    this.showError('Error rendering showrooms: ' + error.message);
-                }
-            }
-
-            async renderSubscriptions() {
-                try {
-                    const content = `
-            <div class="table-container">
-                <div class="table-header">
-                    <h2>Subscription Management</h2>
-                    <button class="btn btn-sm btn-primary" onclick="app.refreshData()">
-                        <i class="fas fa-sync-alt"></i> Refresh
-                    </button>
-                    <div class="price-tag" style="margin-left: 1rem;">
-                        <strong>Plan: ₹10,999/year</strong> (Annual billing only)
+                    return `
+                                        <tr>
+                                            <td><strong>${this.escapeHtml(s.name)}</strong></td>
+                                            <td>${this.escapeHtml(s.city)}</td>
+                                            <td>${this.escapeHtml(s.ownerName)}</td>
+                                            <td>${this.escapeHtml(s.ownerEmail)}<br><small>${this.escapeHtml(s.ownerPhone)}</small></td>
+                                            <td>${users}</td>
+                                            <td>${enquiries}</td>
+                                            <td><strong style="color:${closed > 0 ? '#10b981' : 'inherit'};">${closed}</strong></td>
+                                            <td>
+                                                <span class="badge ${planBadge}">${planText}</span>
+                                                ${daysRemaining !== null ? `<br><small class="badge ${daysClass}">${daysRemaining} days left</small>` : ''}
+                                                ${isPaid ? `<br><small>From: ${subStart}<br>To: ${subEnd}</small>` : `<br><small>Trial: ${trialStartDate}</small>`}
+                                            </td>
+                                            <td><span class="badge ${paymentBadge}">${paymentText}</span></td>
+                                            <td><span class="badge ${s.status === 'active' ? 'badge-success' : 'badge-danger'}">${s.status}</span></td>
+                                            <td>
+                                                <div class="action-buttons">
+                                                    <button class="action-btn btn-info" onclick="app.viewShowroom('${s.id}')"><i class="fas fa-eye"></i></button>
+                                                    <button class="action-btn btn-primary" onclick="app.editShowroom('${s.id}')"><i class="fas fa-edit"></i></button>
+                                                    <button class="action-btn ${s.status === 'active' ? 'btn-warning' : 'btn-success'}" onclick="app.toggleShowroomStatus('${s.id}','${s.status === 'active' ? 'suspend' : 'activate'}')">
+                                                        <i class="fas ${s.status === 'active' ? 'fa-pause' : 'fa-play'}"></i>
+                                                    </button>
+                                                    ${isPaid && !isPaidStatus ? `<button class="action-btn btn-success" onclick="app.markPaymentPaid('${s.id}')"><i class="fas fa-check"></i> Mark Paid</button>` : ''}
+                                                    ${!isPaid ? `<button class="action-btn btn-warning" onclick="app.convertToPaid('${s.id}')"><i class="fas fa-exchange-alt"></i> Convert to Paid</button>` : ''}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    `;
+                }).join('')}
+                                ${this.showrooms.length === 0 ? '<tr><td colspan="11" style="text-align:center;">No showrooms</td></tr>' : ''}
+                            </tbody>
+                        </table>
                     </div>
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Showroom</th>
-                            <th>Plan Type</th>
-                            <th>Trial Start</th>
-                            <th>Subscription Start</th>
-                            <th>Subscription End</th>
-                            <th>Days Remaining</th>
-                            <th>Payment Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${this.showrooms.map(s => {
-                        // FIXED: Properly format trial start date
-                        let trialStartDate = 'N/A';
-                        if (s.trialStartDate) {
-                            trialStartDate = this.formatDate(s.trialStartDate);
-                        } else if (s.createdAt) {
-                            // If no trialStartDate, use createdAt as fallback
-                            trialStartDate = this.formatDate(s.createdAt) + ' (estimated)';
-                        }
-
-                        const subStartDate = s.subscriptionStartDate ? this.formatDate(s.subscriptionStartDate) : 'Not started';
-                        const subEndDate = s.subscriptionEndDate ? this.formatDate(s.subscriptionEndDate) : 'Not set';
-
-                        let daysRemaining;
-                        let daysClass = 'badge-success';
-                        let daysText = 'N/A';
-
-                        if (s.planType === 'paid' && s.subscriptionEndDate) {
-                            daysRemaining = this.calculateDaysRemaining(s.subscriptionEndDate);
-                            daysText = daysRemaining > 0 ? daysRemaining + ' days' : 'Expired';
-                            if (daysRemaining < 30) daysClass = 'badge-warning';
-                            if (daysRemaining < 7) daysClass = 'badge-danger';
-                            if (daysRemaining <= 0) {
-                                daysClass = 'badge-danger';
-                                daysText = 'Expired';
-                            }
-                        } else if (s.planType === 'trial') {
-                            daysRemaining = this.calculateTrialDaysRemaining(s.trialStartDate || s.createdAt);
-                            daysText = daysRemaining > 0 ? daysRemaining + ' days left in trial' : 'Trial ended';
-                            daysClass = 'badge-trial';
-                        }
-
-                        let planBadge = s.planType === 'paid' ? 'badge-success' : 'badge-trial';
-                        let planText = s.planType === 'paid' ? 'Paid' : 'Trial';
-
-                        let paymentBadge = 'badge-trial';
-                        let paymentText = 'Trial';
-
-                        if (s.planType === 'paid') {
-                            paymentBadge = s.paymentStatus === 'paid' ? 'badge-success' : 'badge-danger';
-                            paymentText = s.paymentStatus === 'paid' ? 'Paid - ₹10,999' : 'Unpaid';
-                        }
-
-                        return `
-                                <tr>
-                                    <td><strong>${this.escapeHtml(s.name || 'N/A')}</strong></td>
-                                    <td><span class="badge ${planBadge}">${planText}</span></td>
-                                    <td>${trialStartDate}</td>
-                                    <td>${subStartDate}</td>
-                                    <td>${subEndDate}</td>
-                                    <td>
-                                        <span class="badge ${daysClass}">${daysText}</span>
-                                    </td>
-                                    <td>
-                                        <span class="badge ${paymentBadge}">${paymentText}</span>
-                                    </td>
-                                    <td>
-                                        <div class="action-buttons">
-                                            <button class="action-btn btn-primary" onclick="app.editShowroom('${s.id}')">
-                                                <i class="fas fa-edit"></i> Edit
-                                            </button>
-                                            ${s.planType === 'paid' && s.paymentStatus === 'unpaid' ?
-                                `<button class="action-btn btn-success" onclick="app.markPaymentPaid('${s.id}')">
-                                                    <i class="fas fa-check"></i> Mark Paid
-                                                </button>` : ''}
-                                            ${s.planType === 'trial' ?
-                                `<button class="action-btn btn-warning" onclick="app.convertToPaid('${s.id}')">
-                                                    <i class="fas fa-exchange-alt"></i> Convert to Paid
-                                                </button>` : ''}
-                                        </div>
-                                    </td>
-                                </tr>
-                            `;
-                    }).join('')}
-                        ${this.showrooms.length === 0 ? '<tr><td colspan="8" style="text-align: center;">No showrooms found</td></tr>' : ''}
-                    </tbody>
-                </table>
-            </div>
-        `;
-
-                    document.getElementById('content-area').innerHTML = content;
-                } catch (error) {
-                    console.error('Error rendering subscriptions:', error);
-                    this.showError('Error rendering subscriptions: ' + error.message);
-                }
+                `;
+                document.getElementById('content-area').innerHTML = html;
             }
 
+            // ---- Users ----
             async renderUsers() {
-                try {
-                    // Initialize filter variables
-                    let selectedRole = '';
-
-                    // Filter users based on selections
-                    let filteredUsers = this.users || [];
-
-                    // Apply role filter if selected
-                    if (selectedRole) {
-                        filteredUsers = filteredUsers.filter(u => u && u.role === selectedRole);
-                    }
-
-                    const content = `
-            <div class="table-container">
-                <div class="table-header">
-                    <h2>All Users (${filteredUsers.length})</h2>
-                    <div style="display: flex; gap: 1rem; align-items: center;">
-                        <button class="btn btn-sm btn-primary" onclick="app.refreshData()">
-                            <i class="fas fa-sync-alt"></i> Refresh
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Filter Section -->
-                <div style="background: #f8fafc; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-end;">
-                    <div style="flex: 1; min-width: 200px;">
-                        <label style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; color: var(--dark);">Filter by Role</label>
-                        <select id="user-role-filter" style="width: 100%; padding: 0.5rem; border: 2px solid #e2e8f0; border-radius: 0.5rem; font-size: 0.875rem;" onchange="app.filterUsersByRole()">
-                            <option value="">All Roles</option>
-                            <option value="owner">👑 Owners</option>
-                            <option value="sales">📊 Sales Managers</option>
-                            <option value="admin">🛡️ Admins</option>
-                        </select>
-                    </div>
-                    <div>
-                        <button class="btn btn-sm btn-warning" onclick="app.clearUserFilters()">
-                            <i class="fas fa-times"></i> Clear Filters
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Filter Stats -->
-                <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap;">
-                    <div style="background: #eef2ff; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem;">
-                        <strong>Total:</strong> ${filteredUsers.length} users
-                    </div>
-                    <div style="background: #dbeafe; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem;">
-                        <strong>Owners:</strong> ${filteredUsers.filter(u => u.role === 'owner').length}
-                    </div>
-                    <div style="background: #fed7aa; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem;">
-                        <strong>Sales Managers:</strong> ${filteredUsers.filter(u => u.role === 'sales' || u.role === 'manager' || u.role === 'senior').length}
-                    </div>
-                    <div style="background: #fee2e2; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem;">
-                        <strong>Admins:</strong> ${filteredUsers.filter(u => u.role === 'admin').length}
-                    </div>
-                </div>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Role</th>
-                            <th>Showroom</th>
-                            <th>Status</th>
-                            <th>Enquiries</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${filteredUsers.map(u => {
-                        const showroom = this.showrooms.find(s => s && s.id === u.showroomId);
-                        const userEnquiries = (this.enquiriesByUser && this.enquiriesByUser[u.id]) ||
-                            (this.enquiries || []).filter(e => e && (e.assignedTo === u.id || e.salesManagerId === u.id));
-                        const newEnquiries = userEnquiries.filter(e => e && e.status === 'new').length;
-                        const closedEnquiries = userEnquiries.filter(e => e && e.status === 'closed').length;
-
-                        // Determine role badge styling
-                        let roleBadge = 'badge-info';
-                        let roleIcon = '';
-                        if (u.role === 'admin') {
-                            roleBadge = 'badge-danger';
-                            roleIcon = '🛡️ ';
-                        } else if (u.role === 'owner') {
-                            roleBadge = 'badge-warning';
-                            roleIcon = '👑 ';
-                        } else if (u.role === 'senior') {
-                            roleBadge = 'badge-success';
-                            roleIcon = '⭐ ';
-                        } else {
-                            roleBadge = 'badge-info';
-                            roleIcon = '📊 ';
-                        }
-
-                        return `
-                                <tr>
-                                    <td><strong>${this.escapeHtml(u.name || 'N/A')}</strong></td>
-                                    <td>${this.escapeHtml(u.email || 'N/A')}</td>
-                                    <td>${this.escapeHtml(u.phone || 'N/A')}</td>
-                                    <td>
-                                        <span class="badge ${roleBadge}">
-                                            ${roleIcon}${this.escapeHtml(u.role === 'senior' ? 'Senior Sales' : (u.role || 'staff'))}
-                                        </span>
-                                    </td>
-                                    <td>${this.escapeHtml(showroom?.name || 'N/A')}</td>
-                                    <td>
-                                        <span class="badge ${u.status === 'active' ? 'badge-success' : 'badge-danger'}">
-                                            ${this.escapeHtml(u.status || 'active')}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <div>Total: ${userEnquiries.length}</div>
-                                        <small>
-                                            <span class="badge badge-warning">New: ${newEnquiries}</span>
-                                            <span class="badge badge-success">Closed: ${closedEnquiries}</span>
-                                        </small>
-                                    </td>
-                                    <td>
-                                        <div class="action-buttons">
-                                            <button class="action-btn btn-primary" onclick="app.viewUser('${u.id}')">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button class="action-btn ${u.status === 'active' ? 'btn-warning' : 'btn-success'}" 
-                                                    onclick="app.toggleUserStatus('${u.id}', '${u.status === 'active' ? 'suspend' : 'activate'}')">
-                                                <i class="fas ${u.status === 'active' ? 'fa-pause' : 'fa-play'}"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            `;
-                    }).join('')}
-                        ${filteredUsers.length === 0 ? '<tr><td colspan="8" style="text-align: center; padding: 3rem;">No users found</td></tr>' : ''}
-                    </tbody>
-                </table>
-            </div>
-        `;
-
-                    document.getElementById('content-area').innerHTML = content;
-
-                    // Set the filter dropdown to the current selection
-                    if (this.userRoleFilter) {
-                        document.getElementById('user-role-filter').value = this.userRoleFilter;
-                    }
-
-                } catch (error) {
-                    console.error('Error rendering users:', error);
-                    this.showError('Error rendering users: ' + error.message);
-                }
-            }
-
-            // Add these methods to your ShowroomDeskAdmin class
-
-            async filterUsersByRole() {
-                const roleFilter = document.getElementById('user-role-filter')?.value || '';
-
-                // Store filter state
-                this.userRoleFilter = roleFilter;
-
-                // Filter users based on selected role
-                let filteredUsers = this.users || [];
-
-                if (roleFilter) {
-                    if (roleFilter === 'sales') {
-                        // Include all sales-related roles
-                        filteredUsers = filteredUsers.filter(u => u && (u.role === 'sales' || u.role === 'manager' || u.role === 'senior'));
+                let filteredUsers = this.users;
+                if (this.userRoleFilter) {
+                    if (this.userRoleFilter === 'sales') {
+                        filteredUsers = filteredUsers.filter(u => u.role === 'sales' || u.role === 'manager' || u.role === 'senior');
                     } else {
-                        filteredUsers = filteredUsers.filter(u => u && u.role === roleFilter);
+                        filteredUsers = filteredUsers.filter(u => u.role === this.userRoleFilter);
                     }
                 }
 
-                // Re-render with filtered users
-                await this.renderFilteredUsers(filteredUsers);
-            }
-
-            async renderFilteredUsers(filteredUsers) {
-                try {
-                    const content = `
-            <div class="table-container">
-                <div class="table-header">
-                    <h2>All Users (${filteredUsers.length})</h2>
-                    <div style="display: flex; gap: 1rem; align-items: center;">
-                        <button class="btn btn-sm btn-primary" onclick="app.refreshData()">
-                            <i class="fas fa-sync-alt"></i> Refresh
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Filter Section -->
-                <div style="background: #f8fafc; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-end;">
-                    <div style="flex: 1; min-width: 200px;">
-                        <label style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; color: var(--dark);">Filter by Role</label>
-                        <select id="user-role-filter" style="width: 100%; padding: 0.5rem; border: 2px solid #e2e8f0; border-radius: 0.5rem; font-size: 0.875rem;" onchange="app.filterUsersByRole()">
-                            <option value="">All Roles</option>
-                            <option value="owner" ${this.userRoleFilter === 'owner' ? 'selected' : ''}>👑 Owners</option>
-                            <option value="sales" ${this.userRoleFilter === 'sales' ? 'selected' : ''}>📊 Sales Managers</option>
-                            <option value="admin" ${this.userRoleFilter === 'admin' ? 'selected' : ''}>🛡️ Admins</option>
-                        </select>
-                    </div>
-                    <div>
-                        <button class="btn btn-sm btn-warning" onclick="app.clearUserFilters()">
-                            <i class="fas fa-times"></i> Clear Filters
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Filter Stats -->
-                <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap;">
-                    <div style="background: #eef2ff; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem;">
-                        <strong>Total:</strong> ${filteredUsers.length} users
-                    </div>
-                    <div style="background: #dbeafe; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem;">
-                        <strong>Owners:</strong> ${filteredUsers.filter(u => u.role === 'owner').length}
-                    </div>
-                    <div style="background: #fed7aa; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem;">
-                        <strong>Sales Managers:</strong> ${filteredUsers.filter(u => u.role === 'sales' || u.role === 'manager' || u.role === 'senior').length}
-                    </div>
-                    <div style="background: #fee2e2; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem;">
-                        <strong>Admins:</strong> ${filteredUsers.filter(u => u.role === 'admin').length}
-                    </div>
-                </div>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Role</th>
-                            <th>Showroom</th>
-                            <th>Status</th>
-                            <th>Enquiries</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${filteredUsers.map(u => {
-                        const showroom = this.showrooms.find(s => s && s.id === u.showroomId);
-                        const userEnquiries = (this.enquiries || []).filter(e => e && (e.assignedTo === u.id || e.salesManagerId === u.id));
-                        const newEnquiries = userEnquiries.filter(e => e && e.status === 'new').length;
-                        const closedEnquiries = userEnquiries.filter(e => e && e.status === 'closed').length;
-
-                        let roleBadge = 'badge-info';
-                        let roleIcon = '';
-                        if (u.role === 'admin') {
-                            roleBadge = 'badge-danger';
-                            roleIcon = '🛡️ ';
-                        } else if (u.role === 'owner') {
-                            roleBadge = 'badge-warning';
-                            roleIcon = '👑 ';
-                        } else if (u.role === 'senior') {
-                            roleBadge = 'badge-success';
-                            roleIcon = '⭐ ';
-                        } else {
-                            roleBadge = 'badge-info';
-                            roleIcon = '📊 ';
-                        }
-
-                        return `
-                                <tr>
-                                    <td><strong>${this.escapeHtml(u.name || 'N/A')}</strong></td>
-                                    <td>${this.escapeHtml(u.email || 'N/A')}</td>
-                                    <td>${this.escapeHtml(u.phone || 'N/A')}</td>
-                                    <td>
-                                        <span class="badge ${roleBadge}">
-                                            ${roleIcon}${this.escapeHtml(u.role === 'senior' ? 'Senior Sales' : (u.role || 'staff'))}
-                                        </span>
-                                    </td>
-                                    <td>${this.escapeHtml(showroom?.name || 'N/A')}</td>
-                                    <td>
-                                        <span class="badge ${u.status === 'active' ? 'badge-success' : 'badge-danger'}">
-                                            ${this.escapeHtml(u.status || 'active')}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <div>Total: ${userEnquiries.length}</div>
-                                        <small>
-                                            <span class="badge badge-warning">New: ${newEnquiries}</span>
-                                            <span class="badge badge-success">Closed: ${closedEnquiries}</span>
-                                        </small>
-                                    </td>
-                                    <td>
-                                        <div class="action-buttons">
-                                            <button class="action-btn btn-primary" onclick="app.viewUser('${u.id}')">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button class="action-btn ${u.status === 'active' ? 'btn-warning' : 'btn-success'}" 
-                                                    onclick="app.toggleUserStatus('${u.id}', '${u.status === 'active' ? 'suspend' : 'activate'}')">
-                                                <i class="fas ${u.status === 'active' ? 'fa-pause' : 'fa-play'}"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            `;
-                    }).join('')}
-                        ${filteredUsers.length === 0 ? '<tr><td colspan="8" style="text-align: center; padding: 3rem;">No users found</td></tr>' : ''}
-                    </tbody>
-                </table>
-            </div>
-        `;
-
-                    document.getElementById('content-area').innerHTML = content;
-
-                } catch (error) {
-                    console.error('Error rendering filtered users:', error);
-                    this.showError('Error rendering users: ' + error.message);
-                }
-            }
-
-            async clearUserFilters() {
-                this.userRoleFilter = '';
-                await this.renderUsers();
-            }
-
-            async renderEnquiries() {
-                try {
-                    // Initialize filter variables from stored state
-                    const currentFilters = this.enquiryFilters || { showroom: '', status: '' };
-
-                    // Filter enquiries based on selections
-                    let filteredEnquiries = this.enquiries || [];
-
-                    if (currentFilters.showroom) {
-                        filteredEnquiries = filteredEnquiries.filter(e => e && e.showroomId === currentFilters.showroom);
-                    }
-
-                    if (currentFilters.status) {
-                        filteredEnquiries = filteredEnquiries.filter(e => e && e.status === currentFilters.status);
-                    }
-
-                    // Enhance filtered enquiries with details
-                    const enquiriesWithDetails = filteredEnquiries.map(e => {
-                        const assignedUser = (this.users || []).find(u => u && u.id === e.assignedTo);
-                        const showroom = (this.showrooms || []).find(s => s && s.id === e.showroomId);
-                        return {
-                            ...e,
-                            assignedToName: assignedUser?.name || 'Unassigned',
-                            assignedToRole: assignedUser?.role || 'N/A',
-                            showroomName: showroom?.name || 'N/A'
-                        };
-                    });
-
-                    // Create showroom options for filter dropdown
-                    const showroomOptions = (this.showrooms || []).map(s =>
-                        `<option value="${s.id}" ${currentFilters.showroom === s.id ? 'selected' : ''}>${this.escapeHtml(s.name)}</option>`
-                    ).join('');
-
-                    // Create status options for filter dropdown - INCLUDING "hot" status
-                    const statusOptions = [
-                        { value: 'new', label: 'New' },
-                        { value: 'followup', label: 'Follow-up' },
-                        { value: 'hot', label: 'Hot' },
-                        { value: 'closed', label: 'Closed' }
-                    ].map(status =>
-                        `<option value="${status.value}" ${currentFilters.status === status.value ? 'selected' : ''}>${status.label}</option>`
-                    ).join('');
-
-                    // Count enquiries by status for the current filter
-                    const newCount = filteredEnquiries.filter(e => e && e.status === 'new').length;
-                    const followupCount = filteredEnquiries.filter(e => e && e.status === 'followup').length;
-                    const hotCount = filteredEnquiries.filter(e => e && e.status === 'hot').length;
-                    const closedCount = filteredEnquiries.filter(e => e && e.status === 'closed').length;
-
-                    const content = `
-            <div class="table-container">
-                <div class="table-header">
-                    <h2>All Enquiries (${filteredEnquiries.length})</h2>
-                    <div style="display: flex; gap: 1rem; align-items: center;">
-                        <button class="btn btn-sm btn-primary" onclick="app.refreshData()">
-                            <i class="fas fa-sync-alt"></i> Refresh
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Filter Section -->
-                <div style="background: #f8fafc; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-end;">
-                    <div style="flex: 1; min-width: 200px;">
-                        <label style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; color: var(--dark);">Filter by Showroom</label>
-                        <select id="showroom-filter" style="width: 100%; padding: 0.5rem; border: 2px solid #e2e8f0; border-radius: 0.5rem; font-size: 0.875rem;" onchange="app.applyEnquiryFilters()">
-                            <option value="">All Showrooms</option>
-                            ${showroomOptions}
-                        </select>
-                    </div>
-                    <div style="flex: 1; min-width: 200px;">
-                        <label style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; color: var(--dark);">Filter by Status</label>
-                        <select id="status-filter" style="width: 100%; padding: 0.5rem; border: 2px solid #e2e8f0; border-radius: 0.5rem; font-size: 0.875rem;" onchange="app.applyEnquiryFilters()">
-                            <option value="">All Statuses</option>
-                            ${statusOptions}
-                        </select>
-                    </div>
-                    <div>
-                        <button class="btn btn-sm btn-warning" onclick="app.clearEnquiryFilters()">
-                            <i class="fas fa-times"></i> Clear Filters
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Filter Stats -->
-                <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap;">
-                    <div style="background: #eef2ff; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem;">
-                        <strong>Total:</strong> ${filteredEnquiries.length} enquiries
-                    </div>
-                    <div style="background: #dbeafe; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem;">
-                        <strong>New:</strong> ${newCount}
-                    </div>
-                    <div style="background: #fed7aa; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem;">
-                        <strong>Follow-up:</strong> ${followupCount}
-                    </div>
-                    <div style="background: #fecaca; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem; color: #991b1b;">
-                        <strong>Hot:</strong> ${hotCount}
-                    </div>
-                    <div style="background: #d1fae5; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem;">
-                        <strong>Closed:</strong> ${closedCount}
-                    </div>
-                </div>
-
-                <!-- Enquiries Table -->
-                <div style="overflow-x: auto;">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Customer Name</th>
-                                <th>Phone</th>
-                                <th>Vehicle Model</th>
-                                <th>Showroom</th>
-                                <th>Assigned To</th>
-                                <th>Status</th>
-                                <th>Created</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${enquiriesWithDetails.map(e => {
-                        const createdDate = this.formatDate(e?.createdAt);
-
-                        let statusClass = 'badge-info';
-                        let statusText = e?.status || 'new';
-                        if (statusText === 'closed') statusClass = 'badge-success';
-                        if (statusText === 'followup') statusClass = 'badge-warning';
-                        if (statusText === 'hot') statusClass = 'badge-danger'; // Hot status in red
-
-                        return `
-                                    <tr>
-                                        <td><strong>${this.escapeHtml(e?.customerName || 'N/A')}</strong></td>
-                                        <td>${this.escapeHtml(e?.phone || 'N/A')}</td>
-                                        <td>${this.escapeHtml(e?.vehicleModel || 'N/A')}</td>
-                                        <td>${this.escapeHtml(e?.showroomName)}</td>
-                                        <td>
-                                            ${this.escapeHtml(e?.assignedToName)}
-                                            <br><small class="badge badge-info">${this.escapeHtml(e?.assignedToRole)}</small>
-                                        </td>
-                                        <td><span class="badge ${statusClass}">${this.escapeHtml(statusText)}</span></td>
-                                        <td><small>${createdDate}</small></td>
-                                    </tr>
-                                `;
-                    }).join('')}
-                            ${enquiriesWithDetails.length === 0 ? '<tr><td colspan="7" style="text-align: center; padding: 3rem;">No enquiries found matching the selected filters</td></tr>' : ''}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        `;
-
-                    document.getElementById('content-area').innerHTML = content;
-
-                } catch (error) {
-                    console.error('Error rendering enquiries:', error);
-                    this.showError('Error rendering enquiries: ' + error.message);
-                }
-            }
-
-
-            // Add filter methods to the class
-            // Add these methods inside the ShowroomDeskAdmin class
-            async applyEnquiryFilters() {
-                const showroomFilter = document.getElementById('showroom-filter')?.value || '';
-                const statusFilter = document.getElementById('status-filter')?.value || '';
-
-                // Store filter state
-                this.enquiryFilters = {
-                    showroom: showroomFilter,
-                    status: statusFilter
-                };
-
-                // Re-render with filters
-                await this.renderEnquiries();
-            }
-
-            async clearEnquiryFilters() {
-                this.enquiryFilters = {
-                    showroom: '',
-                    status: ''
-                };
-                await this.renderEnquiries();
-            }
-
-            async clearEnquiryFilters() {
-                this.enquiryFilters = {
-                    showroom: '',
-                    status: ''
-                };
-                await this.renderEnquiries();
-            }
-
-            async clearEnquiryFilters() {
-                this.enquiryFilters = {
-                    showroom: '',
-                    status: ''
-                };
-                await this.renderEnquiries();
-            }
-
-            async renderInventory() {
-                try {
-                    // Enhance inventory with showroom details
-                    const inventoryWithDetails = this.inventory.map(item => {
-                        const showroom = this.showrooms.find(s => s.id === item.showroomId);
-                        return {
-                            ...item,
-                            showroomName: showroom?.name || 'N/A'
-                        };
-                    });
-
-                    const content = `
+                const html = `
                     <div class="table-container">
                         <div class="table-header">
-                            <h2>All Inventory Items (${this.inventory.length})</h2>
-                            <button class="btn btn-sm btn-primary" onclick="app.refreshData()">
-                                <i class="fas fa-sync-alt"></i> Refresh
-                            </button>
+                            <h2>All Users (${filteredUsers.length})</h2>
+                            <div style="display:flex;gap:1rem;align-items:center;">
+                                <button class="btn btn-sm btn-primary" onclick="app.refreshData()"><i class="fas fa-sync-alt"></i> Refresh</button>
+                            </div>
+                        </div>
+                        <div style="background:#f8fafc;padding:1rem;border-radius:0.5rem;margin-bottom:1.5rem;display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-end;">
+                            <div style="flex:1;min-width:200px;">
+                                <label style="display:block;font-size:0.875rem;font-weight:500;margin-bottom:0.5rem;color:var(--dark);">Filter by Role</label>
+                                <select id="user-role-filter" style="width:100%;padding:0.5rem;border:2px solid #e2e8f0;border-radius:0.5rem;font-size:0.875rem;" onchange="app.filterUsersByRole()">
+                                    <option value="">All Roles</option>
+                                    <option value="owner" ${this.userRoleFilter === 'owner' ? 'selected' : ''}>👑 Owners</option>
+                                    <option value="sales" ${this.userRoleFilter === 'sales' ? 'selected' : ''}>📊 Sales Managers</option>
+                                    <option value="admin" ${this.userRoleFilter === 'admin' ? 'selected' : ''}>🛡️ Admins</option>
+                                </select>
+                            </div>
+                            <div>
+                                <button class="btn btn-sm btn-warning" onclick="app.clearUserFilters()"><i class="fas fa-times"></i> Clear Filters</button>
+                            </div>
+                        </div>
+                        <div style="display:flex;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;">
+                            <div style="background:#eef2ff;padding:0.5rem 1rem;border-radius:2rem;font-size:0.875rem;"><strong>Total:</strong> ${filteredUsers.length} users</div>
+                            <div style="background:#dbeafe;padding:0.5rem 1rem;border-radius:2rem;font-size:0.875rem;"><strong>Owners:</strong> ${filteredUsers.filter(u => u.role === 'owner').length}</div>
+                            <div style="background:#fed7aa;padding:0.5rem 1rem;border-radius:2rem;font-size:0.875rem;"><strong>Sales:</strong> ${filteredUsers.filter(u => u.role === 'sales' || u.role === 'manager' || u.role === 'senior').length}</div>
+                            <div style="background:#fee2e2;padding:0.5rem 1rem;border-radius:2rem;font-size:0.875rem;"><strong>Admins:</strong> ${filteredUsers.filter(u => u.role === 'admin').length}</div>
+                        </div>
+                        <table>
+                            <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Role</th><th>Showroom</th><th>Status</th><th>Enquiries</th><th>Actions</th></tr></thead>
+                            <tbody>
+                                ${filteredUsers.map(u => {
+                    const showroom = this.showrooms.find(s => s.id === u.showroomId);
+                    const userEnquiries = (this.enquiriesByUser[u.id] || []).length;
+                    const newEnq = (this.enquiriesByUser[u.id] || []).filter(e => e.status === 'new').length;
+                    const closedEnq = (this.enquiriesByUser[u.id] || []).filter(e => e.status === 'closed').length;
+                    let roleIcon = '';
+                    let roleBadge = 'badge-info';
+                    if (u.role === 'admin') { roleIcon = '🛡️ '; roleBadge = 'badge-danger'; }
+                    else if (u.role === 'owner') { roleIcon = '👑 '; roleBadge = 'badge-warning'; }
+                    else if (u.role === 'senior') { roleIcon = '⭐ '; roleBadge = 'badge-success'; }
+                    else { roleIcon = '📊 '; }
+                    return `
+                                        <tr>
+                                            <td><strong>${this.escapeHtml(u.name)}</strong></td>
+                                            <td>${this.escapeHtml(u.email)}</td>
+                                            <td>${this.escapeHtml(u.phone)}</td>
+                                            <td><span class="badge ${roleBadge}">${roleIcon}${this.escapeHtml(u.role === 'senior' ? 'Senior Sales' : u.role)}</span></td>
+                                            <td>${this.escapeHtml(showroom?.name || 'N/A')}</td>
+                                            <td><span class="badge ${u.status === 'active' ? 'badge-success' : 'badge-danger'}">${u.status}</span></td>
+                                            <td><div>Total: ${userEnquiries}</div><small><span class="badge badge-warning">New: ${newEnq}</span> <span class="badge badge-success">Closed: ${closedEnq}</span></small></td>
+                                            <td>
+                                                <button class="action-btn btn-primary" onclick="app.viewUser('${u.id}')"><i class="fas fa-eye"></i></button>
+                                                <button class="action-btn ${u.status === 'active' ? 'btn-warning' : 'btn-success'}" onclick="app.toggleUserStatus('${u.id}','${u.status === 'active' ? 'suspend' : 'activate'}')">
+                                                    <i class="fas ${u.status === 'active' ? 'fa-pause' : 'fa-play'}"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    `;
+                }).join('')}
+                                ${filteredUsers.length === 0 ? '<tr><td colspan="8" style="text-align:center;padding:3rem;">No users found</td></tr>' : ''}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+                document.getElementById('content-area').innerHTML = html;
+            }
+
+            // ---- Enquiries ----
+            async renderEnquiries() {
+                const currentFilters = this.enquiryFilters || { showroom: '', status: '' };
+                let filtered = this.enquiries;
+                if (currentFilters.showroom) filtered = filtered.filter(e => e.showroomId === currentFilters.showroom);
+                if (currentFilters.status) filtered = filtered.filter(e => e.status === currentFilters.status);
+
+                const showroomOptions = this.showrooms.map(s => `<option value="${s.id}" ${currentFilters.showroom === s.id ? 'selected' : ''}>${this.escapeHtml(s.name)}</option>`).join('');
+                const statusOptions = [
+                    { value: 'new', label: 'New' },
+                    { value: 'followup', label: 'Follow-up' },
+                    { value: 'hot', label: 'Hot' },
+                    { value: 'closed', label: 'Closed' }
+                ].map(s => `<option value="${s.value}" ${currentFilters.status === s.value ? 'selected' : ''}>${s.label}</option>`).join('');
+
+                const newCount = filtered.filter(e => e.status === 'new').length;
+                const followupCount = filtered.filter(e => e.status === 'followup').length;
+                const hotCount = filtered.filter(e => e.status === 'hot').length;
+                const closedCount = filtered.filter(e => e.status === 'closed').length;
+
+                const html = `
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h2>All Enquiries (${filtered.length})</h2>
+                            <button class="btn btn-sm btn-primary" onclick="app.refreshData()"><i class="fas fa-sync-alt"></i> Refresh</button>
+                        </div>
+                        <div style="background:#f8fafc;padding:1rem;border-radius:0.5rem;margin-bottom:1.5rem;display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-end;">
+                            <div style="flex:1;min-width:200px;">
+                                <label style="display:block;font-size:0.875rem;font-weight:500;margin-bottom:0.5rem;color:var(--dark);">Filter by Showroom</label>
+                                <select id="enquiry-showroom-filter" style="width:100%;padding:0.5rem;border:2px solid #e2e8f0;border-radius:0.5rem;font-size:0.875rem;" onchange="app.applyEnquiryFilters()">
+                                    <option value="">All Showrooms</option>
+                                    ${showroomOptions}
+                                </select>
+                            </div>
+                            <div style="flex:1;min-width:200px;">
+                                <label style="display:block;font-size:0.875rem;font-weight:500;margin-bottom:0.5rem;color:var(--dark);">Filter by Status</label>
+                                <select id="enquiry-status-filter" style="width:100%;padding:0.5rem;border:2px solid #e2e8f0;border-radius:0.5rem;font-size:0.875rem;" onchange="app.applyEnquiryFilters()">
+                                    <option value="">All Statuses</option>
+                                    ${statusOptions}
+                                </select>
+                            </div>
+                            <div>
+                                <button class="btn btn-sm btn-warning" onclick="app.clearEnquiryFilters()"><i class="fas fa-times"></i> Clear Filters</button>
+                            </div>
+                        </div>
+                        <div style="display:flex;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;">
+                            <div style="background:#eef2ff;padding:0.5rem 1rem;border-radius:2rem;font-size:0.875rem;"><strong>Total:</strong> ${filtered.length}</div>
+                            <div style="background:#dbeafe;padding:0.5rem 1rem;border-radius:2rem;font-size:0.875rem;"><strong>New:</strong> ${newCount}</div>
+                            <div style="background:#fed7aa;padding:0.5rem 1rem;border-radius:2rem;font-size:0.875rem;"><strong>Follow-up:</strong> ${followupCount}</div>
+                            <div style="background:#fecaca;padding:0.5rem 1rem;border-radius:2rem;font-size:0.875rem;color:#991b1b;"><strong>Hot:</strong> ${hotCount}</div>
+                            <div style="background:#d1fae5;padding:0.5rem 1rem;border-radius:2rem;font-size:0.875rem;"><strong>Closed:</strong> ${closedCount}</div>
+                        </div>
+                        <table>
+                            <thead><tr><th>Customer</th><th>Phone</th><th>Vehicle</th><th>Showroom</th><th>Assigned To</th><th>Status</th><th>Created</th></tr></thead>
+                            <tbody>
+                                ${filtered.slice(0, 50).map(e => {
+                    const showroom = this.showrooms.find(s => s.id === e.showroomId);
+                    const assigned = this.users.find(u => u.id === e.assignedTo);
+                    const statusClass = e.status === 'closed' ? 'badge-success' : e.status === 'followup' ? 'badge-warning' : e.status === 'hot' ? 'badge-danger' : 'badge-info';
+                    return `
+                                        <tr>
+                                            <td><strong>${this.escapeHtml(e.customerName)}</strong></td>
+                                            <td>${this.escapeHtml(e.phone)}</td>
+                                            <td>${this.escapeHtml(e.vehicleModel)}</td>
+                                            <td>${this.escapeHtml(showroom?.name || 'N/A')}</td>
+                                            <td>${this.escapeHtml(assigned?.name || 'Unassigned')}</td>
+                                            <td><span class="badge ${statusClass}">${e.status}</span></td>
+                                            <td><small>${this.formatDate(e.createdAt)}</small></td>
+                                        </tr>
+                                    `;
+                }).join('')}
+                                ${filtered.length === 0 ? '<tr><td colspan="7" style="text-align:center;padding:3rem;">No enquiries found</td></tr>' : ''}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+                document.getElementById('content-area').innerHTML = html;
+            }
+
+            // ---- Showroom Metrics ----
+            async renderShowroomMetrics() {
+                const html = `
+                    <div class="table-container">
+                        <div class="table-header">
+                            <div>
+                                <h2>Showroom Metrics</h2>
+                                <p style="color:var(--gray);font-size:0.875rem;margin-top:0.35rem;">Enquiries and login IDs grouped by showroom</p>
+                            </div>
+                            <button class="btn btn-sm btn-primary" onclick="app.refreshData()"><i class="fas fa-sync-alt"></i> Refresh</button>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr><th>Showroom</th><th>Total Enquiries</th><th>Closed Enquiries</th><th>Login IDs Created</th></tr>
+                            </thead>
+                            <tbody>
+                                ${this.showrooms.map(showroom => {
+                    const showroomKey = this.normalizeShowroomId(showroom.id);
+                    const showroomEnquiries = this.enquiriesByShowroom[showroomKey] || [];
+                    const loginIds = (this.usersByShowroom[showroomKey] || []).length;
+                    const closedEnquiries = showroomEnquiries.filter(enquiry => enquiry.status === 'closed').length;
+                    return `
+                                    <tr>
+                                        <td><strong>${this.escapeHtml(showroom.name)}</strong><br><small>${this.escapeHtml(showroom.city)}</small></td>
+                                        <td><span class="badge badge-info">${showroomEnquiries.length}</span></td>
+                                        <td><span class="badge ${closedEnquiries ? 'badge-success' : 'badge-trial'}">${closedEnquiries}</span></td>
+                                        <td><span class="badge badge-warning">${loginIds}</span></td>
+                                    </tr>
+                                `;
+                }).join('')}
+                                ${this.showrooms.length === 0 ? '<tr><td colspan="4" style="text-align:center;padding:3rem;">No showrooms found</td></tr>' : ''}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+                document.getElementById('content-area').innerHTML = html;
+            }
+
+            // ---- Subscriptions ----
+            async renderSubscriptions() {
+                const html = `
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h2>Subscription Management</h2>
+                            <button class="btn btn-sm btn-primary" onclick="app.refreshData()"><i class="fas fa-sync-alt"></i> Refresh</button>
+                            <span style="margin-left:1rem;font-size:0.8rem;color:var(--gray);"><strong>Plan: ₹10,999/year</strong> (Annual billing only)</span>
                         </div>
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Item Name</th>
-                                    <th>Category</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Showroom</th>
-                                    <th>Added</th>
+                                    <th>Showroom</th><th>Plan</th><th>Trial Start</th><th>Sub Start</th><th>Sub End</th><th>Days Remaining</th><th>Payment</th><th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                ${inventoryWithDetails.map(item => {
-                        const createdDate = this.formatDate(item.createdAt);
-
-                        return `
+                                ${this.showrooms.map(s => {
+                    const trialStart = s.trialStartDate ? this.formatDate(s.trialStartDate) : (s.createdAt ? this.formatDate(s.createdAt) + ' (est)' : 'N/A');
+                    const subStart = s.subscriptionStartDate ? this.formatDate(s.subscriptionStartDate) : 'Not started';
+                    const subEnd = s.subscriptionEndDate ? this.formatDate(s.subscriptionEndDate) : 'Not set';
+                    const isPaid = s.planType === 'paid';
+                    const daysRemaining = isPaid ? this.calculateDaysRemaining(s.subscriptionEndDate) : this.calculateTrialDaysRemaining(s.trialStartDate);
+                    let daysText = 'N/A', daysClass = 'badge-success';
+                    if (daysRemaining !== null) {
+                        daysText = isPaid ? (daysRemaining > 0 ? daysRemaining + ' days' : 'Expired') : (daysRemaining > 0 ? daysRemaining + ' days left in trial' : 'Trial ended');
+                        daysClass = isPaid ? (daysRemaining < 30 ? 'badge-warning' : 'badge-success') : 'badge-trial';
+                        if (daysRemaining <= 0) daysClass = 'badge-danger';
+                    }
+                    const planBadge = isPaid ? 'badge-success' : 'badge-trial';
+                    const paymentBadge = isPaid ? (s.paymentStatus === 'paid' ? 'badge-success' : 'badge-danger') : 'badge-trial';
+                    const paymentText = isPaid ? (s.paymentStatus === 'paid' ? 'Paid - ₹10,999' : 'Unpaid') : 'Trial';
+                    return `
                                         <tr>
-                                            <td><strong>${this.escapeHtml(item.name || 'N/A')}</strong></td>
-                                            <td>${this.escapeHtml(item.category || 'N/A')}</td>
-                                            <td>₹${item.price?.toLocaleString() || 0}</td>
-                                            <td>${item.quantity || 0}</td>
-                                            <td>${this.escapeHtml(item.showroomName)}</td>
-                                            <td><small>${createdDate}</small></td>
+                                            <td><strong>${this.escapeHtml(s.name)}</strong></td>
+                                            <td><span class="badge ${planBadge}">${isPaid ? 'Paid' : 'Trial'}</span></td>
+                                            <td>${trialStart}</td>
+                                            <td>${subStart}</td>
+                                            <td>${subEnd}</td>
+                                            <td><span class="badge ${daysClass}">${daysText}</span></td>
+                                            <td><span class="badge ${paymentBadge}">${paymentText}</span></td>
+                                            <td>
+                                                <button class="action-btn btn-primary" onclick="app.editShowroom('${s.id}')"><i class="fas fa-edit"></i> Edit</button>
+                                                ${isPaid && s.paymentStatus === 'unpaid' ? `<button class="action-btn btn-success" onclick="app.markPaymentPaid('${s.id}')"><i class="fas fa-check"></i> Mark Paid</button>` : ''}
+                                                ${!isPaid ? `<button class="action-btn btn-warning" onclick="app.convertToPaid('${s.id}')"><i class="fas fa-exchange-alt"></i> Convert to Paid</button>` : ''}
+                                            </td>
                                         </tr>
                                     `;
-                    }).join('')}
-                                ${this.inventory.length === 0 ? '<tr><td colspan="6" style="text-align: center;">No inventory items found</td></tr>' : ''}
+                }).join('')}
+                                ${this.showrooms.length === 0 ? '<tr><td colspan="8" style="text-align:center;">No showrooms</td></tr>' : ''}
                             </tbody>
                         </table>
                     </div>
                 `;
-
-                    document.getElementById('content-area').innerHTML = content;
-                } catch (error) {
-                    console.error('Error rendering inventory:', error);
-                    this.showError('Error rendering inventory: ' + error.message);
-                }
+                document.getElementById('content-area').innerHTML = html;
             }
 
+            // ---- Analytics ----
             async renderAnalytics() {
-                try {
-                    // Prepare data for charts
-                    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-                    const enquiriesByMonth = new Array(12).fill(0);
-                    const dealsByMonth = new Array(12).fill(0);
+                const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                const enquiriesByMonth = new Array(12).fill(0);
+                const dealsByMonth = new Array(12).fill(0);
+                this.enquiries.forEach(e => {
+                    if (e.createdAt) {
+                        try {
+                            let date;
+                            if (e.createdAt.toDate) date = e.createdAt.toDate();
+                            else if (e.createdAt.seconds) date = new Date(e.createdAt.seconds * 1000);
+                            else date = new Date(e.createdAt);
+                            const month = date.getMonth();
+                            enquiriesByMonth[month]++;
+                            if (e.status === 'closed') dealsByMonth[month]++;
+                        } catch { }
+                    }
+                });
 
-                    this.enquiries.forEach(e => {
-                        if (e.createdAt) {
-                            try {
-                                let date;
-                                if (e.createdAt.toDate) {
-                                    date = e.createdAt.toDate();
-                                } else if (e.createdAt.seconds) {
-                                    date = new Date(e.createdAt.seconds * 1000);
-                                } else {
-                                    date = new Date(e.createdAt);
-                                }
-                                const month = date.getMonth();
-                                enquiriesByMonth[month]++;
+                const html = `
+                    <div class="analytics-page">
+                    <div class="stats-grid">
+                        <div class="stat-card"><div class="stat-content"><h3>Total Showrooms</h3><div class="value">${this.showrooms.length}</div></div></div>
+                        <div class="stat-card"><div class="stat-content"><h3>Total Enquiries</h3><div class="value">${this.enquiries.length}</div></div></div>
+                        <div class="stat-card"><div class="stat-content"><h3>Closed Deals</h3><div class="value">${this.enquiries.filter(e => e.status === 'closed').length}</div></div></div>
+                        <div class="stat-card"><div class="stat-content"><h3>Conversion</h3><div class="value">${this.enquiries.length ? ((this.enquiries.filter(e => e.status === 'closed').length / this.enquiries.length) * 100).toFixed(1) : 0}%</div></div></div>
+                    </div>
+                    <div class="charts-grid">
+                        <div class="chart-card"><h3>Enquiries per Month</h3><div class="analytics-chart-frame"><canvas id="enquiries-chart"></canvas></div></div>
+                        <div class="chart-card"><h3>Closed Deals per Month</h3><div class="analytics-chart-frame"><canvas id="deals-chart"></canvas></div></div>
+                    </div>
+                    </div>
+                `;
+                document.getElementById('content-area').innerHTML = html;
+                setTimeout(() => {
+                    this.initCharts(enquiriesByMonth, dealsByMonth, months);
+                }, 100);
+            }
 
-                                if (e.status === 'closed') {
-                                    dealsByMonth[month]++;
-                                }
-                            } catch (e) {
-                                // Skip invalid dates
-                            }
-                        }
+            initCharts(enqData, dealData, labels) {
+                if (this.charts.enquiries) this.charts.enquiries.destroy();
+                if (this.charts.deals) this.charts.deals.destroy();
+                const ctx1 = document.getElementById('enquiries-chart')?.getContext('2d');
+                if (ctx1) {
+                    this.charts.enquiries = new Chart(ctx1, {
+                        type: 'line',
+                        data: { labels, datasets: [{ label: 'Enquiries', data: enqData, borderColor: '#2563eb', backgroundColor: 'rgba(37,99,235,0.1)', tension: 0.4, fill: true }] },
+                        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
                     });
-
-                    // Showroom stats
-                    const trialShowrooms = this.showrooms.filter(s => s.planType === 'trial').length;
-                    const paidShowrooms = this.showrooms.filter(s => s.planType === 'paid').length;
-
-                    const content = `
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-content">
-                        <h3>Showroom Plans</h3>
-                        <div class="value">${this.showrooms.length}</div>
-                        <div class="sub">
-                            Trial: ${trialShowrooms} | Paid (₹10,999/yr): ${paidShowrooms}
-                        </div>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-content">
-                        <h3>Total Enquiries</h3>
-                        <div class="value">${this.enquiries.length}</div>
-                        <div class="sub">Avg per showroom: ${this.showrooms.length ? (this.enquiries.length / this.showrooms.length).toFixed(1) : 0}</div>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-content">
-                        <h3>Conversion Rate</h3>
-                        <div class="value">${this.enquiries.length ? ((this.enquiries.filter(e => e.status === 'closed').length / this.enquiries.length) * 100).toFixed(1) : 0}%</div>
-                        <div class="sub">${this.enquiries.filter(e => e.status === 'closed').length} closed deals</div>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-content">
-                        <h3>Active Showrooms</h3>
-                        <div class="value">${this.showrooms.filter(s => s.status === 'active').length}</div>
-                        <div class="sub">${this.showrooms.filter(s => s.status === 'suspended').length} suspended</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="charts-grid" style="grid-template-columns: repeat(2, 1fr); gap: 1rem;">
-                <div class="chart-card" style="height: 250px;">
-                    <h3 style="margin-bottom: 0.5rem; font-size: 0.9rem;">Enquiries per Month</h3>
-                    <canvas id="enquiries-chart" style="height: 180px; width: 100%;"></canvas>
-                </div>
-                <div class="chart-card" style="height: 250px;">
-                    <h3 style="margin-bottom: 0.5rem; font-size: 0.9rem;">Closed Deals per Month</h3>
-                    <canvas id="deals-chart" style="height: 180px; width: 100%;"></canvas>
-                </div>
-            </div>
-        `;
-
-                    document.getElementById('content-area').innerHTML = content;
-
-                    // Initialize charts with smaller options
-                    setTimeout(() => {
-                        this.initCharts(enquiriesByMonth, dealsByMonth, months);
-                    }, 100);
-                } catch (error) {
-                    console.error('Error rendering analytics:', error);
-                    this.showError('Error rendering analytics: ' + error.message);
+                }
+                const ctx2 = document.getElementById('deals-chart')?.getContext('2d');
+                if (ctx2) {
+                    this.charts.deals = new Chart(ctx2, {
+                        type: 'bar',
+                        data: { labels, datasets: [{ label: 'Closed Deals', data: dealData, backgroundColor: 'rgba(16,185,129,0.8)', borderRadius: 6 }] },
+                        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+                    });
                 }
             }
 
-            initCharts(enquiriesData, dealsData, labels) {
+            // ===== Actions =====
+            // ---- Convert to Paid ----
+            // ---- Convert to Paid ----
+            async convertToPaid(showroomId) {
+                if (!confirm('Convert this showroom from Trial to Paid? They will be billed ₹10,999/year.')) return;
                 try {
-                    // Destroy existing charts
-                    if (this.charts.enquiries) this.charts.enquiries.destroy();
-                    if (this.charts.deals) this.charts.deals.destroy();
-
-                    // Enquiries chart - smaller size
-                    const enquiriesCtx = document.getElementById('enquiries-chart')?.getContext('2d');
-                    if (enquiriesCtx) {
-                        this.charts.enquiries = new Chart(enquiriesCtx, {
-                            type: 'line',
-                            data: {
-                                labels: labels,
-                                datasets: [{
-                                    label: 'Enquiries',
-                                    data: enquiriesData,
-                                    borderColor: 'rgb(37, 99, 235)',
-                                    backgroundColor: 'rgba(37, 99, 235, 0.1)',
-                                    tension: 0.4,
-                                    fill: true,
-                                    pointRadius: 2,
-                                    borderWidth: 2
-                                }]
-                            },
-                            options: {
-                                responsive: true,
-                                maintainAspectRatio: false,
-                                plugins: {
-                                    legend: {
-                                        display: false
-                                    },
-                                    tooltip: {
-                                        enabled: true,
-                                        mode: 'index',
-                                        intersect: false
-                                    }
-                                },
-                                scales: {
-                                    y: {
-                                        beginAtZero: true,
-                                        ticks: {
-                                            stepSize: 1,
-                                            font: {
-                                                size: 10
-                                            }
-                                        }
-                                    },
-                                    x: {
-                                        ticks: {
-                                            font: {
-                                                size: 10
-                                            },
-                                            maxRotation: 0
-                                        }
-                                    }
-                                },
-                                layout: {
-                                    padding: {
-                                        top: 5,
-                                        bottom: 5,
-                                        left: 5,
-                                        right: 5
-                                    }
-                                }
-                            }
-                        });
+                    // Find the showroom object
+                    const showroom = this.showrooms.find(s => s.id === showroomId);
+                    if (!showroom) {
+                        this.toast('Showroom not found', 'error');
+                        return;
+                    }
+                    // Find the owner using the ownerId stored in the showroom
+                    const owner = this.users.find(u => u.id === showroom.ownerId);
+                    if (!owner) {
+                        this.toast('Owner not found', 'error');
+                        return;
                     }
 
-                    // Deals chart - smaller size
-                    const dealsCtx = document.getElementById('deals-chart')?.getContext('2d');
-                    if (dealsCtx) {
-                        this.charts.deals = new Chart(dealsCtx, {
-                            type: 'bar',
-                            data: {
-                                labels: labels,
-                                datasets: [{
-                                    label: 'Closed Deals',
-                                    data: dealsData,
-                                    backgroundColor: 'rgba(16, 185, 129, 0.8)',
-                                    borderRadius: 4,
-                                    barPercentage: 0.7
-                                }]
-                            },
-                            options: {
-                                responsive: true,
-                                maintainAspectRatio: false,
-                                plugins: {
-                                    legend: {
-                                        display: false
-                                    },
-                                    tooltip: {
-                                        enabled: true
-                                    }
-                                },
-                                scales: {
-                                    y: {
-                                        beginAtZero: true,
-                                        ticks: {
-                                            stepSize: 1,
-                                            font: {
-                                                size: 10
-                                            }
-                                        }
-                                    },
-                                    x: {
-                                        ticks: {
-                                            font: {
-                                                size: 10
-                                            },
-                                            maxRotation: 0
-                                        }
-                                    }
-                                },
-                                layout: {
-                                    padding: {
-                                        top: 5,
-                                        bottom: 5,
-                                        left: 5,
-                                        right: 5
-                                    }
-                                }
-                            }
-                        });
+                    const paymentMethod = prompt('Select payment method:\n1. razorpay\n2. bank\n3. cash', 'razorpay');
+                    let selectedMethod = 'pending';
+                    if (paymentMethod === '1' || paymentMethod?.toLowerCase().includes('razorpay')) selectedMethod = 'razorpay';
+                    else if (paymentMethod === '2' || paymentMethod?.toLowerCase().includes('bank')) selectedMethod = 'bank';
+                    else if (paymentMethod === '3' || paymentMethod?.toLowerCase().includes('cash')) selectedMethod = 'cash';
+                    else if (paymentMethod) selectedMethod = paymentMethod.toLowerCase();
+                    else return;
+
+                    const today = new Date();
+                    const nextYear = new Date(); nextYear.setFullYear(nextYear.getFullYear() + 1);
+
+                    const updateData = {
+                        planType: 'paid',
+                        paymentStatus: 'unpaid',
+                        subscriptionStartDate: today,
+                        subscriptionEndDate: nextYear,
+                        'subscription.planType': 'paid',
+                        'subscription.status': 'active',
+                        'subscription.paymentStatus': 'unpaid',
+                        'subscription.paymentMethod': selectedMethod,
+                        'subscription.startDate': today,
+                        'subscription.endDate': nextYear,
+                        'subscription.amount': 10999,
+                        'subscription.billingCycle': 'annual',
+                        'subscription.plan': 'complete',
+                        'subscription.price': 999,
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    };
+                    this.showLoading();
+                    await this.db.collection('users').doc(owner.id).update(updateData);
+
+                    // Update local showroom data
+                    const idx = this.showrooms.findIndex(s => s.id === showroomId);
+                    if (idx !== -1) {
+                        this.showrooms[idx].planType = 'paid';
+                        this.showrooms[idx].paymentStatus = 'unpaid';
+                        this.showrooms[idx].subscriptionStartDate = today;
+                        this.showrooms[idx].subscriptionEndDate = nextYear;
+                        this.showrooms[idx].subscription = {
+                            ...this.showrooms[idx].subscription,
+                            planType: 'paid',
+                            status: 'active',
+                            paymentStatus: 'unpaid',
+                            paymentMethod: selectedMethod,
+                            startDate: today,
+                            endDate: nextYear
+                        };
                     }
-                } catch (error) {
-                    console.error('Error initializing charts:', error);
+                    await this.renderShowrooms();
+                    this.toast(`✅ Converted to paid via ${selectedMethod}. Mark payment when received.`, 'success');
+                } catch (e) {
+                    console.error(e);
+                    this.toast('Error: ' + e.message, 'error');
                 }
+                this.hideLoading();
             }
 
-            async viewShowroom(showroomId) {
+            // ---- Mark Payment Paid ----
+            async markPaymentPaid(showroomId) {
                 try {
                     const showroom = this.showrooms.find(s => s.id === showroomId);
-                    if (!showroom) return;
+                    if (!showroom) { this.toast('Showroom not found', 'error'); return; }
+                    const owner = this.users.find(u => u.id === showroom.ownerId);
+                    if (!owner) { this.toast('Owner not found', 'error'); return; }
 
-                    const users = this.usersByShowroom[showroomId] || [];
-                    const enquiries = this.enquiriesByShowroom[showroomId] || [];
-                    const inventory = this.inventoryByShowroom[showroomId] || [];
-                    const closedDeals = enquiries.filter(e => e.status === 'closed').length;
-
-                    const trialStartDate = this.formatDate(showroom.trialStartDate);
-                    const subStartDate = this.formatDate(showroom.subscriptionStartDate);
-                    const subEndDate = this.formatDate(showroom.subscriptionEndDate);
-
-                    let daysRemaining;
-                    if (showroom.planType === 'paid') {
-                        daysRemaining = this.calculateDaysRemaining(showroom.subscriptionEndDate);
-                    } else {
-                        daysRemaining = this.calculateTrialDaysRemaining(showroom.trialStartDate);
+                    let method = owner.subscription?.paymentMethod || 'unknown';
+                    if (method === 'trial' || method === 'pending') {
+                        const input = prompt('Payment method? (razorpay/bank/cash)', 'razorpay');
+                        if (!input) return;
+                        method = input.toLowerCase();
                     }
+                    const updateData = {
+                        paymentStatus: 'paid',
+                        'subscription.paymentStatus': 'paid',
+                        'subscription.paymentMethod': method,
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    };
+                    this.showLoading();
+                    await this.db.collection('users').doc(owner.id).update(updateData);
 
-                    const content = `
-                    <div>
-                        <h4 style="margin-bottom: 1rem;">Showroom Information</h4>
-                        <table style="width: 100%;">
-                            <tr>
-                                <td style="padding: 0.5rem 0;"><strong>Name:</strong></td>
-                                <td style="padding: 0.5rem 0;">${this.escapeHtml(showroom.name || 'N/A')}</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0.5rem 0;"><strong>City:</strong></td>
-                                <td style="padding: 0.5rem 0;">${this.escapeHtml(showroom.city || 'N/A')}</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0.5rem 0;"><strong>Owner:</strong></td>
-                                <td style="padding: 0.5rem 0;">${this.escapeHtml(showroom.ownerName || 'N/A')}</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0.5rem 0;"><strong>Owner Email:</strong></td>
-                                <td style="padding: 0.5rem 0;">${this.escapeHtml(showroom.ownerEmail || 'N/A')}</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0.5rem 0;"><strong>Owner Phone:</strong></td>
-                                <td style="padding: 0.5rem 0;">${this.escapeHtml(showroom.ownerPhone || 'N/A')}</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0.5rem 0;"><strong>Plan Type:</strong></td>
-                                <td style="padding: 0.5rem 0;">
-                                    <span class="badge ${showroom.planType === 'paid' ? 'badge-success' : 'badge-trial'}">
-                                        ${showroom.planType === 'paid' ? 'Paid - ₹10,999/year' : 'Trial (14 days)'}
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0.5rem 0;"><strong>Trial Start:</strong></td>
-                                <td style="padding: 0.5rem 0;">${trialStartDate}</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0.5rem 0;"><strong>Subscription Start:</strong></td>
-                                <td style="padding: 0.5rem 0;">${subStartDate}</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0.5rem 0;"><strong>Subscription End:</strong></td>
-                                <td style="padding: 0.5rem 0;">${subEndDate}</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0.5rem 0;"><strong>Days Remaining:</strong></td>
-                                <td style="padding: 0.5rem 0;">
-                                    <span class="badge ${daysRemaining > 0 ? 'badge-success' : 'badge-danger'}">
-                                        ${daysRemaining > 0 ? daysRemaining + ' days' : 'Expired'}
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0.5rem 0;"><strong>Payment Status:</strong></td>
-                                <td style="padding: 0.5rem 0;">
-                                    <span class="badge ${showroom.paymentStatus === 'paid' ? 'badge-success' : showroom.paymentStatus === 'trial' ? 'badge-trial' : 'badge-danger'}">
-                                        ${showroom.paymentStatus === 'paid' ? 'Paid - ₹10,999' : showroom.paymentStatus === 'trial' ? 'Trial' : 'Unpaid'}
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0.5rem 0;"><strong>Status:</strong></td>
-                                <td style="padding: 0.5rem 0;">
-                                    <span class="badge ${showroom.status === 'active' ? 'badge-success' : 'badge-danger'}">
-                                        ${showroom.status || 'active'}
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
+                    const idx = this.showrooms.findIndex(s => s.id === showroomId);
+                    if (idx !== -1) {
+                        this.showrooms[idx].paymentStatus = 'paid';
+                        this.showrooms[idx].subscription.paymentStatus = 'paid';
+                        this.showrooms[idx].subscription.paymentMethod = method;
+                    }
+                    await this.renderShowrooms();
+                    this.toast(`✅ Payment marked as paid via ${method}`, 'success');
+                } catch (e) {
+                    console.error(e);
+                    this.toast('Error: ' + e.message, 'error');
+                }
+                this.hideLoading();
+            }
 
-                        <h4 style="margin: 1.5rem 0 1rem;">Performance Stats</h4>
-                        <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr);">
-                            <div class="stat-card" style="padding: 1rem;">
-                                <div class="stat-content">
-                                    <h3>Users</h3>
-                                    <div class="value" style="font-size: 1.5rem;">${users.length}</div>
-                                </div>
-                            </div>
-                            <div class="stat-card" style="padding: 1rem;">
-                                <div class="stat-content">
-                                    <h3>Enquiries</h3>
-                                    <div class="value" style="font-size: 1.5rem;">${enquiries.length}</div>
-                                </div>
-                            </div>
-                            <div class="stat-card" style="padding: 1rem;">
-                                <div class="stat-content">
-                                    <h3>Closed Deals</h3>
-                                    <div class="value" style="font-size: 1.5rem;">${closedDeals}</div>
-                                </div>
-                            </div>
-                            <div class="stat-card" style="padding: 1rem;">
-                                <div class="stat-content">
-                                    <h3>Inventory</h3>
-                                    <div class="value" style="font-size: 1.5rem;">${inventory.length}</div>
-                                </div>
-                            </div>
-                        </div>
+            // ---- Suspend/Activate Showroom ----
+            async toggleShowroomStatus(showroomId, action) {
+                if (!confirm(`Are you sure you want to ${action} this showroom?`)) return;
+                try {
+                    const status = action === 'activate' ? 'active' : 'suspended';
+                    // Find all users with this showroomId
+                    const usersToUpdate = this.users.filter(u => u.showroomId === showroomId);
+                    if (usersToUpdate.length === 0) {
+                        this.toast('No users found for this showroom', 'warning');
+                        return;
+                    }
+                    const batch = this.db.batch();
+                    usersToUpdate.forEach(u => {
+                        const ref = this.db.collection('users').doc(u.id);
+                        batch.update(ref, { status: status, updatedAt: firebase.firestore.FieldValue.serverTimestamp() });
+                    });
+                    this.showLoading();
+                    await batch.commit();
+                    await this.refreshData();
+                    this.toast(`✅ Showroom ${action}d successfully`, 'success');
+                } catch (e) {
+                    console.error(e);
+                    this.toast('Error: ' + e.message, 'error');
+                }
+                this.hideLoading();
+            }
 
-                        <h4 style="margin: 1.5rem 0 1rem;">Team Members</h4>
-                        <table style="width: 100%;">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Role</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${users.map(u => `
-                                    <tr>
-                                        <td>${this.escapeHtml(u.name || 'N/A')}</td>
-                                        <td><span class="badge badge-info">${this.escapeHtml(u.role || 'staff')}</span></td>
-                                        <td>${this.escapeHtml(u.email || 'N/A')}</td>
-                                        <td>${this.escapeHtml(u.phone || 'N/A')}</td>
-                                        <td><span class="badge ${u.status === 'active' ? 'badge-success' : 'badge-danger'}">${this.escapeHtml(u.status || 'active')}</span></td>
-                                    </tr>
-                                `).join('')}
-                                ${users.length === 0 ? '<tr><td colspan="5" style="text-align: center;">No team members found</td></tr>' : ''}
-                            </tbody>
-                        </table>
+            // ---- Suspend/Activate User ----
+            async toggleUserStatus(userId, action) {
+                if (!confirm(`Are you sure you want to ${action} this user?`)) return;
+                try {
+                    const status = action === 'activate' ? 'active' : 'suspended';
+                    this.showLoading();
+                    await this.db.collection('users').doc(userId).update({ status: status, updatedAt: firebase.firestore.FieldValue.serverTimestamp() });
+                    await this.refreshData();
+                    this.toast(`✅ User ${action}d`, 'success');
+                } catch (e) { console.error(e); this.toast('Error: ' + e.message, 'error'); }
+                this.hideLoading();
+            }
+
+            // ---- View Showroom ----
+            async viewShowroom(showroomId) {
+                const s = this.showrooms.find(s => s.id === showroomId);
+                if (!s) return;
+                const users = (this.usersByShowroom[s.id] || []);
+                const enquiries = (this.enquiriesByShowroom[s.id] || []);
+                const closed = enquiries.filter(e => e.status === 'closed').length;
+                const owner = this.users.find(u => u.id === s.ownerId);
+                const html = `
+                    <h4>Showroom: ${this.escapeHtml(s.name)}</h4>
+                    <table style="width:100%;">
+                        <tr><td><strong>City:</strong></td><td>${this.escapeHtml(s.city)}</td></tr>
+                        <tr><td><strong>Owner:</strong></td><td>${this.escapeHtml(s.ownerName)} (${this.escapeHtml(s.ownerEmail)})</td></tr>
+                        <tr><td><strong>Plan:</strong></td><td>${s.planType}</td></tr>
+                        <tr><td><strong>Payment Status:</strong></td><td>${s.paymentStatus}</td></tr>
+                        <tr><td><strong>Status:</strong></td><td>${s.status}</td></tr>
+                    </table>
+                    <h4 style="margin-top:1rem;">Stats</h4>
+                    <div class="stats-grid" style="grid-template-columns:repeat(3,1fr);">
+                        <div class="stat-card" style="padding:1rem;"><div class="stat-content"><h3>Users</h3><div class="value">${users.length}</div></div></div>
+                        <div class="stat-card" style="padding:1rem;"><div class="stat-content"><h3>Enquiries</h3><div class="value">${enquiries.length}</div></div></div>
+                        <div class="stat-card" style="padding:1rem;"><div class="stat-content"><h3>Closed</h3><div class="value">${closed}</div></div></div>
                     </div>
+                    <h4>Team Members</h4>
+                    <table>
+                        <thead><tr><th>Name</th><th>Role</th><th>Email</th><th>Status</th></tr></thead>
+                        <tbody>${users.map(u => `<tr><td>${this.escapeHtml(u.name)}</td><td>${u.role}</td><td>${this.escapeHtml(u.email)}</td><td>${u.status}</td></tr>`).join('')}</tbody>
+                    </table>
                 `;
-
-                    document.getElementById('showroom-details-content').innerHTML = content;
-                    this.openModal('view-showroom-modal');
-                } catch (error) {
-                    console.error('Error viewing showroom:', error);
-                    this.toast('Error loading showroom details', 'error');
-                }
+                document.getElementById('showroom-details-content').innerHTML = html;
+                this.openModal('view-showroom-modal');
             }
 
+            // ---- View User ----
+            async viewUser(userId) {
+                const u = this.users.find(u => u.id === userId);
+                if (!u) return;
+                const enquiries = (this.enquiriesByUser[u.id] || []);
+                const showroom = this.showrooms.find(s => s.id === u.showroomId);
+                const html = `
+                    <h4>User: ${this.escapeHtml(u.name)}</h4>
+                    <table style="width:100%;">
+                        <tr><td><strong>Email:</strong></td><td>${this.escapeHtml(u.email)}</td></tr>
+                        <tr><td><strong>Phone:</strong></td><td>${this.escapeHtml(u.phone)}</td></tr>
+                        <tr><td><strong>Role:</strong></td><td>${u.role}</td></tr>
+                        <tr><td><strong>Showroom:</strong></td><td>${this.escapeHtml(showroom?.name || 'N/A')}</td></tr>
+                        <tr><td><strong>Status:</strong></td><td>${u.status}</td></tr>
+                        <tr><td><strong>Joined:</strong></td><td>${this.formatDate(u.createdAt)}</td></tr>
+                    </table>
+                    <h4>Enquiries (${enquiries.length})</h4>
+                    <table><thead><tr><th>Customer</th><th>Phone</th><th>Status</th></tr></thead><tbody>
+                        ${enquiries.slice(0, 5).map(e => `<tr><td>${this.escapeHtml(e.customerName)}</td><td>${e.phone}</td><td>${e.status}</td></tr>`).join('')}
+                    </tbody></table>
+                `;
+                document.getElementById('user-details-content').innerHTML = html;
+                this.openModal('view-user-modal');
+            }
+
+            // ---- Edit Showroom ----
+            // ---- Edit Showroom ----
             editShowroom(showroomId) {
-                const showroom = this.showrooms.find(s => s.id === showroomId);
-                if (!showroom) return;
-
-                document.getElementById('edit-showroom-id').value = showroom.id;
-                document.getElementById('edit-showroom-name').value = showroom.name || '';
-                document.getElementById('edit-showroom-city').value = showroom.city || '';
-                document.getElementById('edit-showroom-owner').value = showroom.ownerName || '';
-                document.getElementById('edit-showroom-email').value = showroom.ownerEmail || '';
-                document.getElementById('edit-showroom-phone').value = showroom.ownerPhone || '';
-                document.getElementById('edit-showroom-plan').value = showroom.planType || 'trial';
-
-                if (showroom.trialStartDate) {
-                    let startDate;
-                    if (showroom.trialStartDate.toDate) {
-                        startDate = showroom.trialStartDate.toDate();
-                    } else if (showroom.trialStartDate.seconds) {
-                        startDate = new Date(showroom.trialStartDate.seconds * 1000);
-                    } else {
-                        startDate = new Date(showroom.trialStartDate);
-                    }
-                    document.getElementById('edit-showroom-start-date').value = startDate.toISOString().split('T')[0];
-                }
-
-                if (showroom.subscriptionEndDate) {
-                    let endDate;
-                    if (showroom.subscriptionEndDate.toDate) {
-                        endDate = showroom.subscriptionEndDate.toDate();
-                    } else if (showroom.subscriptionEndDate.seconds) {
-                        endDate = new Date(showroom.subscriptionEndDate.seconds * 1000);
-                    } else {
-                        endDate = new Date(showroom.subscriptionEndDate);
-                    }
-                    document.getElementById('edit-showroom-end-date').value = endDate.toISOString().split('T')[0];
-                }
-
-                document.getElementById('edit-showroom-payment').value = showroom.paymentStatus || 'trial';
-                document.getElementById('edit-showroom-status').value = showroom.status || 'active';
-
-                this.openModal('edit-showroom-modal');
-            }
-
-            async saveShowroom() {
-                const showroomId = document.getElementById('edit-showroom-id').value;
-
-                // Find the owner user
-                const owner = this.users.find(u => u.role === 'owner' && u.showroomId === showroomId);
+                const s = this.showrooms.find(s => s.id === showroomId);
+                if (!s) return;
+                // Find owner by ownerId
+                const owner = this.users.find(u => u.id === s.ownerId);
                 if (!owner) {
                     this.toast('Owner not found', 'error');
                     return;
                 }
+                document.getElementById('edit-showroom-id').value = s.id;
+                document.getElementById('edit-showroom-name').value = s.name || '';
+                document.getElementById('edit-showroom-city').value = s.city || '';
+                document.getElementById('edit-showroom-owner').value = owner.name || '';
+                document.getElementById('edit-showroom-email').value = owner.email || '';
+                document.getElementById('edit-showroom-phone').value = owner.phone || '';
+                document.getElementById('edit-showroom-plan').value = s.planType || 'trial';
+                if (s.trialStartDate) {
+                    const d = new Date(s.trialStartDate.seconds ? s.trialStartDate.seconds * 1000 : s.trialStartDate);
+                    document.getElementById('edit-showroom-start-date').value = d.toISOString().split('T')[0];
+                }
+                if (s.subscriptionEndDate) {
+                    const d = new Date(s.subscriptionEndDate.seconds ? s.subscriptionEndDate.seconds * 1000 : s.subscriptionEndDate);
+                    document.getElementById('edit-showroom-end-date').value = d.toISOString().split('T')[0];
+                }
+                document.getElementById('edit-showroom-payment').value = s.paymentStatus || 'unpaid';
+                document.getElementById('edit-showroom-status').value = s.status || 'active';
+                this.openModal('edit-showroom-modal');
+            }
 
-                const planType = document.getElementById('edit-showroom-plan').value;
-                const startDate = new Date(document.getElementById('edit-showroom-start-date').value);
-                const endDate = document.getElementById('edit-showroom-end-date').value ?
-                    new Date(document.getElementById('edit-showroom-end-date').value) : null;
+            async saveShowroom() {
+                const id = document.getElementById('edit-showroom-id').value;
+                const showroom = this.showrooms.find(s => s.id === id);
+                if (!showroom) { this.toast('Showroom not found', 'error'); return; }
+                const owner = this.users.find(u => u.id === showroom.ownerId);
+                if (!owner) { this.toast('Owner not found', 'error'); return; }
 
-                const userData = {
+                const data = {
                     showroomName: document.getElementById('edit-showroom-name').value,
                     showroomCity: document.getElementById('edit-showroom-city').value,
                     name: document.getElementById('edit-showroom-owner').value,
                     email: document.getElementById('edit-showroom-email').value,
                     phone: document.getElementById('edit-showroom-phone').value,
-                    planType: planType,
+                    planType: document.getElementById('edit-showroom-plan').value,
                     paymentStatus: document.getElementById('edit-showroom-payment').value,
                     status: document.getElementById('edit-showroom-status').value,
+                    trialStartDate: new Date(document.getElementById('edit-showroom-start-date').value),
+                    subscriptionEndDate: document.getElementById('edit-showroom-end-date').value ? new Date(document.getElementById('edit-showroom-end-date').value) : null,
                     updatedAt: firebase.firestore.FieldValue.serverTimestamp()
                 };
-
-                // Set appropriate date fields based on plan type
-                if (planType === 'trial') {
-                    userData.trialStartDate = startDate;
-                    userData.subscriptionStartDate = null;
-                    userData.subscriptionEndDate = null;
-                } else {
-                    userData.trialStartDate = null;
-                    userData.subscriptionStartDate = startDate;
-                    userData.subscriptionEndDate = endDate;
-                }
-
                 try {
                     this.showLoading();
-
-                    // Update owner user document
-                    await this.db.collection('users').doc(owner.id).update(userData);
-
-                    // If showroom is suspended, suspend all its users
-                    if (userData.status === 'suspended') {
-                        const usersToUpdate = this.users.filter(u => u.showroomId === showroomId && u.id !== owner.id);
-                        const batch = this.db.batch();
-                        usersToUpdate.forEach(user => {
-                            const userRef = this.db.collection('users').doc(user.id);
-                            batch.update(userRef, { status: 'suspended' });
-                        });
-                        await batch.commit();
-                    }
-
-                    // If showroom is activated, activate all its users
-                    if (userData.status === 'active') {
-                        const usersToUpdate = this.users.filter(u => u.showroomId === showroomId && u.id !== owner.id);
-                        const batch = this.db.batch();
-                        usersToUpdate.forEach(user => {
-                            const userRef = this.db.collection('users').doc(user.id);
-                            batch.update(userRef, { status: 'active' });
-                        });
-                        await batch.commit();
-                    }
-
+                    await this.db.collection('users').doc(owner.id).update(data);
                     this.closeModal('edit-showroom-modal');
                     await this.refreshData();
-                    this.toast('✅ Showroom updated successfully', 'success');
-                } catch (error) {
-                    console.error('Error updating showroom:', error);
-                    this.toast('Error updating showroom: ' + error.message, 'error');
-                } finally {
-                    this.hideLoading();
+                    this.toast('✅ Showroom updated', 'success');
+                } catch (e) {
+                    console.error(e);
+                    this.toast('Error: ' + e.message, 'error');
                 }
+                this.hideLoading();
             }
 
-            async toggleShowroomStatus(showroomId, action) {
-                if (!confirm(`Are you sure you want to ${action} this showroom? This will affect all users in this showroom.`)) return;
-
-                try {
-                    this.showLoading();
-                    const status = action === 'activate' ? 'active' : 'suspended';
-
-                    // Find all users in this showroom
-                    const usersToUpdate = this.users.filter(u => u.showroomId === showroomId);
-
-                    const batch = this.db.batch();
-                    usersToUpdate.forEach(user => {
-                        const userRef = this.db.collection('users').doc(user.id);
-                        batch.update(userRef, {
-                            status: status,
-                            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                        });
-                    });
-                    await batch.commit();
-
-                    await this.refreshData();
-                    this.toast(`✅ Showroom and all its users ${action}d successfully`, 'success');
-                } catch (error) {
-                    console.error('Error updating showroom status:', error);
-                    this.toast('Error updating status: ' + error.message, 'error');
-                } finally {
-                    this.hideLoading();
-                }
-            }
-
-            async markPaymentPaid(showroomId) {
-                try {
-                    // Find the owner user
-                    const owner = this.users.find(u => u.role === 'owner' && u.showroomId === showroomId);
-                    if (!owner) {
-                        this.toast('Owner not found', 'error');
-                        return;
-                    }
-
-                    this.showLoading();
-                    await this.db.collection('users').doc(owner.id).update({
-                        paymentStatus: 'paid',
-                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-
-                    await this.refreshData();
-                    this.toast('✅ Payment marked as paid - ₹10,999 received', 'success');
-                } catch (error) {
-                    console.error('Error updating payment:', error);
-                    this.toast('Error updating payment: ' + error.message, 'error');
-                } finally {
-                    this.hideLoading();
-                }
-            }
-
-            async convertToPaid(showroomId) {
-                if (!confirm('Convert this showroom from Trial to Paid? They will be billed ₹10,999/year.')) return;
-
-                try {
-                    // Find the owner user
-                    const owner = this.users.find(u => u.role === 'owner' && u.showroomId === showroomId);
-                    if (!owner) {
-                        this.toast('Owner not found', 'error');
-                        return;
-                    }
-
-                    const today = new Date();
-                    const nextYear = new Date();
-                    nextYear.setFullYear(nextYear.getFullYear() + 1);
-
-                    this.showLoading();
-                    await this.db.collection('users').doc(owner.id).update({
-                        planType: 'paid',
-                        paymentStatus: 'unpaid', // Will need to mark paid after payment
-                        subscriptionStartDate: today,
-                        subscriptionEndDate: nextYear,
-                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-
-                    await this.refreshData();
-                    this.toast('✅ Showroom converted to Paid plan. Please mark payment when received.', 'success');
-                } catch (error) {
-                    console.error('Error converting to paid:', error);
-                    this.toast('Error converting to paid: ' + error.message, 'error');
-                } finally {
-                    this.hideLoading();
-                }
-            }
-
-            async viewUser(userId) {
-                try {
-                    if (!userId) {
-                        this.toast('Invalid user ID', 'error');
-                        return;
-                    }
-
-                    const user = (this.users || []).find(u => u && u.id === userId);
-                    if (!user) {
-                        this.toast('User not found', 'error');
-                        return;
-                    }
-
-                    const showroom = (this.showrooms || []).find(s => s && s.id === user.showroomId);
-                    const userEnquiries = (this.enquiries || []).filter(e => e && (e.assignedTo === userId || e.salesManagerId === userId)) || [];
-                    const newEnquiries = userEnquiries.filter(e => e && e.status === 'new').length;
-                    const closedEnquiries = userEnquiries.filter(e => e && e.status === 'closed').length;
-
-                    const createdDate = this.formatDate(user?.createdAt);
-
-                    const content = `
-            <div>
-                <h4 style="margin-bottom: 1rem;">User Information</h4>
-                <table style="width: 100%;">
-                    <tr>
-                        <td style="padding: 0.5rem 0;"><strong>Name:</strong></td>
-                        <td style="padding: 0.5rem 0;">${this.escapeHtml(user?.name || 'N/A')}</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 0.5rem 0;"><strong>Email:</strong></td>
-                        <td style="padding: 0.5rem 0;">${this.escapeHtml(user?.email || 'N/A')}</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 0.5rem 0;"><strong>Phone:</strong></td>
-                        <td style="padding: 0.5rem 0;">${this.escapeHtml(user?.phone || 'N/A')}</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 0.5rem 0;"><strong>Role:</strong></td>
-                        <td style="padding: 0.5rem 0;">
-                            <span class="badge ${user?.role === 'admin' ? 'badge-danger' : user?.role === 'owner' ? 'badge-warning' : 'badge-info'}">
-                                ${this.escapeHtml(user?.role || 'staff')}
-                            </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 0.5rem 0;"><strong>Showroom:</strong></td>
-                        <td style="padding: 0.5rem 0;">${this.escapeHtml(showroom?.name || 'N/A')}</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 0.5rem 0;"><strong>Status:</strong></td>
-                        <td style="padding: 0.5rem 0;">
-                            <span class="badge ${user?.status === 'active' ? 'badge-success' : 'badge-danger'}">
-                                ${this.escapeHtml(user?.status || 'active')}
-                            </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 0.5rem 0;"><strong>Joined:</strong></td>
-                        <td style="padding: 0.5rem 0;">${createdDate}</td>
-                    </tr>
-                </table>
-
-                <h4 style="margin: 1.5rem 0 1rem;">Performance Stats</h4>
-                <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 1.5rem;">
-                    <div class="stat-card" style="padding: 1rem;">
-                        <div class="stat-content">
-                            <h3>Total</h3>
-                            <div class="value" style="font-size: 1.5rem;">${userEnquiries.length}</div>
-                        </div>
-                    </div>
-                    <div class="stat-card" style="padding: 1rem;">
-                        <div class="stat-content">
-                            <h3>New</h3>
-                            <div class="value" style="font-size: 1.5rem; color: var(--warning);">${newEnquiries}</div>
-                        </div>
-                    </div>
-                    <div class="stat-card" style="padding: 1rem;">
-                        <div class="stat-content">
-                            <h3>Closed</h3>
-                            <div class="value" style="font-size: 1.5rem; color: var(--success);">${closedEnquiries}</div>
-                        </div>
-                    </div>
-                </div>
-
-                <h4 style="margin: 1.5rem 0 1rem;">Recent Enquiries</h4>
-                <table style="width: 100%;">
-                    <thead>
-                        <tr>
-                            <th>Customer</th>
-                            <th>Phone</th>
-                            <th>Vehicle</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${userEnquiries.slice(0, 5).map(e => `
-                            <tr>
-                                <td>${this.escapeHtml(e?.customerName || 'N/A')}</td>
-                                <td>${this.escapeHtml(e?.phone || 'N/A')}</td>
-                                <td>${this.escapeHtml(e?.vehicleModel || 'N/A')}</td>
-                                <td><span class="badge ${e?.status === 'closed' ? 'badge-success' : e?.status === 'followup' ? 'badge-warning' : 'badge-info'}">${this.escapeHtml(e?.status || 'new')}</span></td>
-                            </tr>
-                        `).join('')}
-                        ${userEnquiries.length === 0 ? '<tr><td colspan="4" style="text-align: center;">No enquiries found</td></tr>' : ''}
-                    </tbody>
-                </table>
-            </div>
-        `;
-
-                    document.getElementById('user-details-content').innerHTML = content;
-                    this.openModal('view-user-modal');
-                } catch (error) {
-                    console.error('Error viewing user:', error);
-                    this.toast('Error loading user details: ' + error.message, 'error');
-                }
-            }
-
-            async toggleUserStatus(userId, action) {
-                if (!confirm(`Are you sure you want to ${action} this user?`)) return;
-
-                try {
-                    this.showLoading();
-                    const status = action === 'activate' ? 'active' : 'suspended';
-
-                    await this.db.collection('users').doc(userId).update({
-                        status: status,
-                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-
-                    await this.refreshData();
-                    this.toast(`✅ User ${action}d successfully`, 'success');
-                } catch (error) {
-                    console.error('Error updating user status:', error);
-                    this.toast('Error updating status: ' + error.message, 'error');
-                } finally {
-                    this.hideLoading();
-                }
-            }
-
+            // ---- Refresh Data ----
             async refreshData() {
                 this.dataLoaded = false;
                 await this.loadAllData();
                 this.loadPage(this.currentPage);
-                this.toast('Data refreshed successfully', 'success');
+                this.toast('Data refreshed', 'success');
             }
 
-            openModal(modalId) {
-                document.getElementById(modalId).classList.add('active');
+            // ---- Filter Methods ----
+            async filterUsersByRole() {
+                this.userRoleFilter = document.getElementById('user-role-filter')?.value || '';
+                await this.renderUsers();
             }
 
-            closeModal(modalId) {
-                document.getElementById(modalId).classList.remove('active');
+            async clearUserFilters() {
+                this.userRoleFilter = '';
+                document.getElementById('user-role-filter').value = '';
+                await this.renderUsers();
             }
 
+            async applyEnquiryFilters() {
+                const showroom = document.getElementById('enquiry-showroom-filter')?.value || '';
+                const status = document.getElementById('enquiry-status-filter')?.value || '';
+                this.enquiryFilters = { showroom, status };
+                await this.renderEnquiries();
+            }
+
+            async clearEnquiryFilters() {
+                this.enquiryFilters = { showroom: '', status: '' };
+                await this.renderEnquiries();
+            }
+
+            // ---- Modal Helpers ----
+            openModal(id) { document.getElementById(id).classList.add('active'); }
+            closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+            // ---- Toast ----
             toast(message, type = 'info') {
-                const toast = document.createElement('div');
-                toast.className = 'toast';
-                toast.style.borderLeftColor = type === 'success' ? '#10b981' :
-                    type === 'error' ? '#ef4444' :
-                        type === 'warning' ? '#f59e0b' : '#2563eb';
-                toast.innerHTML = `
-                <i class="fas fa-${type === 'success' ? 'check-circle' :
-                        type === 'error' ? 'exclamation-circle' :
-                            type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
-                <span>${message}</span>
-            `;
-                document.body.appendChild(toast);
-                setTimeout(() => toast.remove(), 4000);
+                const el = document.createElement('div');
+                el.className = `toast ${type}`;
+                el.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i> <span>${message}</span>`;
+                document.body.appendChild(el);
+                setTimeout(() => { el.style.opacity = '0'; setTimeout(() => el.remove(), 300); }, 3000);
             }
         }
 
-        // Initialize app
+        // ============================================================
+        //  Initialize
+        // ============================================================
         const app = new ShowroomDeskAdmin();
         window.app = app;
     </script>
